@@ -63,7 +63,7 @@ if __name__ == '__main__':
   elif len(sys.argv) == 3:
     source, dest = sys.argv[1:]
   else:
-    sys.stderr.write('Usage: %s [source_directory] destination_directory\n' % sys.argv[0])
+    file("index.html", 'w').write(InlineIncludes(os.path.abspath("index.html.template"), "/index.html.template"))
     sys.exit(1)
 
   process(source, dest)
