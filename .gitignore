@@ -1,3 +1,4 @@
+*.bz2
 *.swp
 .*.tmp
 deploy-local.sh
@@ -6,6 +7,7 @@ all.css
 *css.map
 .remote-sync.json
 .sync-config.cson
+source_package
 
 # CocoaPods
 Pods/
