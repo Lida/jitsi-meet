@@ -64,7 +64,7 @@ class AudioSettingsButton extends Component<Props, State> {
      */
     async _updatePermissions() {
         const hasPermissions = await JitsiMeetJS.mediaDevices.isDevicePermissionGranted(
-            'audio',
+            'audio'
         );
 
         this.setState({
@@ -123,5 +123,5 @@ const mapDispatchToProps = {
 
 export default connect(
     mapStateToProps,
-    mapDispatchToProps,
+    mapDispatchToProps
 )(AudioSettingsButton);

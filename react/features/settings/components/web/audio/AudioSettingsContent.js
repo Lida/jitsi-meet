@@ -186,7 +186,7 @@ class AudioSettingsContent extends Component<Props, State> {
         await this._disposeTrack(this.state.currentMicData);
 
         const currentMicData = await createLocalAudioTrack(
-            this.props.currentMicDeviceId,
+            this.props.currentMicDeviceId
         );
 
         // In case the component gets unmounted before the track is created
@@ -245,13 +245,13 @@ class AudioSettingsContent extends Component<Props, State> {
                         IconComponent = { IconMicrophoneEmpty }
                         text = { t('settings.selectMic') } />
                     {microphoneDevices.map((data, i) =>
-                        this._renderMicrophoneEntry(data, i),
+                        this._renderMicrophoneEntry(data, i)
                     )}
                     <AudioSettingsHeader
                         IconComponent = { IconVolumeEmpty }
                         text = { t('settings.speakers') } />
                     {outputDevices.map((data, i) =>
-                        this._renderSpeakerEntry(data, i),
+                        this._renderSpeakerEntry(data, i)
                     )}
                 </div>
             </div>

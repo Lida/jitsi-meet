@@ -86,7 +86,7 @@ class VideoSettingsContent extends Component<Props, State> {
         this._disposeTracks(this.state.trackData);
 
         const trackData = await createLocalVideoTracks(
-            this.props.videoDeviceIds,
+            this.props.videoDeviceIds
         );
 
         // In case the component gets unmounted before the tracks are created

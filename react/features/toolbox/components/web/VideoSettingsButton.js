@@ -63,7 +63,7 @@ class VideoSettingsButton extends Component<Props, State> {
      */
     async _updatePermissions() {
         const hasPermissions = await JitsiMeetJS.mediaDevices.isDevicePermissionGranted(
-            'video',
+            'video'
         );
 
         this.setState({
@@ -120,5 +120,5 @@ const mapDispatchToProps = {
 
 export default connect(
     mapStateToProps,
-    mapDispatchToProps,
+    mapDispatchToProps
 )(VideoSettingsButton);

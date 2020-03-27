@@ -1,6 +1,7 @@
 /* application specific logic */
 
-import 'jquery';
+import './prereq';
+
 import 'jquery-contextmenu';
 import 'jQuery-Impromptu';
 

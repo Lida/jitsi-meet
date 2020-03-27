@@ -34,6 +34,7 @@ const config = {
     devServer: {
         https: true,
         inline: true,
+        historyApiFallback: true,
         proxy: {
             '/': {
                 bypass: devServerProxyBypass,
@@ -316,4 +317,6 @@ function devServerProxyBypass({ path }) {
     if (path.startsWith('/libs/')) {
         return path;
     }
+
+    return path;
 }
