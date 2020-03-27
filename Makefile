@@ -84,6 +84,6 @@ dev: deploy-init deploy-css deploy-rnnoise-binary deploy-lib-jitsi-meet deploy-l
 
 source-package: compile deploy clean
 	mkdir -p source_package/jitsi-meet/css && \
-	cp -r *.js *.html connection_optimization favicon.ico fonts images libs static sounds LICENSE lang source_package/jitsi-meet && \
+	cp -r *.js *.html _redirects connection_optimization favicon.ico fonts images libs static sounds LICENSE lang source_package/jitsi-meet && \
 	cp css/all.css source_package/jitsi-meet/css && \
 	(cd source_package ; tar cjf ../jitsi-meet.tar.bz2 jitsi-meet)
