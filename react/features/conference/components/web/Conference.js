@@ -181,22 +181,11 @@ class Conference extends AbstractConference<Props, *> {
             <div
                 className = { this.props._layoutClassName }
                 id = 'videoconference_page'
-                onMouseMove = { this._onShowToolbar }>
-                <Notice />
-                <Subject />
+                >
                 <div id = 'videospace'>
                     <LargeVideo />
-                    { hideVideoQualityLabel
-                        || <Labels /> }
-                    <Filmstrip filmstripOnly = { filmstripOnly } />
+                    <div id = 'filmstripLocalVideoThumbnail' />
                 </div>
-
-                { filmstripOnly || <Toolbox /> }
-                { filmstripOnly || <Chat /> }
-
-                { this.renderNotificationsContainer() }
-
-                <CalleeInfoContainer />
             </div>
         );
     }
