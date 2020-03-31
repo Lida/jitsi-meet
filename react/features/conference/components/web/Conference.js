@@ -13,6 +13,7 @@ import { Filmstrip } from '../../../filmstrip';
 import { CalleeInfoContainer } from '../../../invite';
 import { LargeVideo } from '../../../large-video';
 import { LAYOUTS, getCurrentLayout } from '../../../video-layout';
+import Game from '../../../../game/Game';
 
 import {
     Toolbox,
@@ -183,6 +184,7 @@ class Conference extends AbstractConference<Props, *> {
                 id = 'videoconference_page'
                 >
                 <div id = 'videospace'>
+                    <Game />
                     <LargeVideo />
                     <div id = 'filmstripLocalVideoThumbnail' />
                 </div>
