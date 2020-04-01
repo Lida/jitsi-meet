@@ -13,7 +13,7 @@ import { Filmstrip } from '../../../filmstrip';
 import { CalleeInfoContainer } from '../../../invite';
 import { LargeVideo } from '../../../large-video';
 import { LAYOUTS, getCurrentLayout } from '../../../video-layout';
-import Game from '../../../../game/Game';
+import Game from '../../../../game/pages/Game';
 
 import {
     Toolbox,
