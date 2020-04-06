@@ -49,7 +49,9 @@ export class App extends BaseApp {
                 <I18nextProvider i18n = { i18next }>
                     <Provider store = { store }>
                         <Fragment>
-                            <Router>
+                            <AtlasKitThemeProvider mode = 'dark'>
+                                <ChromeExtensionBanner />
+                                <Router>
                                 <Switch>
                                 <Route exact path="/">
                                     <Home />
@@ -57,6 +59,7 @@ export class App extends BaseApp {
                                 <Route path="/:game/:room" children={<Game />} />
                                 </Switch>
                             </Router>                            
+                            </AtlasKitThemeProvider>
                             <SoundCollection />
                             { this._createExtraElement() }
                             { this._renderDialogContainer() }

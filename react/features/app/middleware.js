@@ -167,7 +167,7 @@ function _navigate({ getState }) {
 function _setRoom(store, next, action) {
     const result = next(action);
 
-    _navigate(store);
+    //_navigate(store);
 
     return result;
 }

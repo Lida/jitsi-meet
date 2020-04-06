@@ -42,6 +42,7 @@
     "@webcomponents/url": "0.7.1",
     "aframe": "1.0.4",
     "aframe-physics-system": "3.3.0",
+    "aframe-template-component": "^3.2.1",
     "amplitude-js": "4.5.2",
     "bc-css-flags": "3.0.0",
     "dropbox": "4.0.9",

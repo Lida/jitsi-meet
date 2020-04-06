@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div>
       <h1>Enter Game/Room</h1>
-      <Link to={`Pandemic/HelloWorld`}>Create Pandemic Room</Link>
+      <Link to={`Pandemic/HelloWorld6837`}>Create Pandemic Room</Link>
     </div>
   );
 }
