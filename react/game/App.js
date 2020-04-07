@@ -52,13 +52,13 @@ export class App extends BaseApp {
                             <AtlasKitThemeProvider mode = 'dark'>
                                 <ChromeExtensionBanner />
                                 <Router>
-                                <Switch>
-                                <Route exact path="/">
-                                    <Home />
-                                </Route>
-                                <Route path="/:game/:room" children={<Game />} />
-                                </Switch>
-                            </Router>                            
+                                    <Switch>
+                                    <Route exact path="/">
+                                        <Home />
+                                    </Route>
+                                    <Route path="/:game/:room" children={<Game />} />
+                                    </Switch>
+                                </Router>                            
                             </AtlasKitThemeProvider>
                             <SoundCollection />
                             { this._createExtraElement() }
