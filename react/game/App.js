@@ -26,7 +26,7 @@ import '../features/video-layout';
 
 import { AbstractApp } from '../features/app/components/AbstractApp';
 import Home from './pages/Home';
-import Game from './pages/Game';
+import { Game } from './pages/Game';
 /**
  * Root app {@code Component} on Web/React.
  *

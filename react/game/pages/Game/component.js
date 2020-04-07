@@ -4,12 +4,14 @@ import React, { useEffect, useState, useCallback } from 'react';
 import 'aframe';
 import 'aframe-physics-system';
 import 'aframe-template-component';
-import { Conference } from '../../features/conference';
+import { Conference } from '../../../features/conference';
 import { useParams } from 'react-router-dom';
 
 import type { Dispatch } from 'redux';
+import { useSelector } from 'react-redux';
 
-import { setRoom } from '../../features/base/conference';
+
+import { setRoom } from '../../../features/base/conference';
 import {
     configWillLoad,
     createFakeConfig,
@@ -17,31 +19,44 @@ import {
     restoreConfig,
     setConfig,
     storeConfig
-} from '../../features/base/config';
-import { connect, disconnect, setLocationURL } from '../../features/base/connection';
-import { loadConfig } from '../../features/base/lib-jitsi-meet';
-import { createDesiredLocalTracks } from '../../features/base/tracks';
+} from '../../../features/base/config';
+import { connect, disconnect, setLocationURL } from '../../../features/base/connection';
+import { loadConfig } from '../../../features/base/lib-jitsi-meet';
+import { createDesiredLocalTracks } from '../../../features/base/tracks';
 import {
     getBackendSafeRoomName,
     getLocationContextRoot,
     parseURIString,
     toURLString
-} from '../../features/base/util';
+} from '../../../features/base/util';
 
 import {
     getDefaultURL,
     getName
-} from '../../features/app/functions';
-import logger from '../../features/app/logger';
+} from '../../../features/app/functions';
+import logger from '../../../features/app/logger';
 
 declare var APP: Object;
 declare var interfaceConfig: Object;
 
 export default function Game() {
     let { room } = useParams();
+
+    let videos = useSelector(state => state['game/videoTracks'])
+
     useEffect(() => {
         APP.store.dispatch(connectToRoom(room));
     }, [])
+    useEffect(() => {
+        if (videos.length > 0) {
+            document.getElementById('local').autoplay = true
+            videos[0].jitsiTrack.attach(document.getElementById('local'))
+        }
+        if (videos.length > 1) {
+            document.getElementById('remote').autoplay = true
+            videos[1].jitsiTrack.attach(document.getElementById('remote'))
+        }
+    }, [videos])
     let game = 'Pandemic'
     // let boardName = window.Game.BasicModule.Map[4].BoardPicker.Board._attributes.image;
     let boardName = encodeURIComponent('Board OTB.jpg');
@@ -94,6 +109,9 @@ export default function Game() {
 
     return (
         <div>
+            <div id="aframe" style={{zIndex: 1}}/>
+            <video id="local" style={{zIndex: 2}}/>
+            <video id="remote" style={{zIndex: 2}}/>
             <Conference />
         </div>
       );    

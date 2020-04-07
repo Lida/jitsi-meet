@@ -1354,20 +1354,6 @@ a:active {
   max-height: initial; }
 
 /**
- * Override @atlaskit/InlineDialog styling for the video preview
- */
-.video-preview .eYJELv {
-  outline: none;
-  padding: 16px; }
-
-/**
- * Override @atlaskit/InlineDialog styling for the audio preview
- */
-.audio-preview .eYJELv {
-  outline: none;
-  padding: 0; }
-
-/**
  * Safari will limit input in input elements to one character when user-select
  * none is applied. Other browsers already support selecting within inputs while
  * user-select is none. As such, disallow user-select except on inputs.
@@ -2502,7 +2488,6 @@ form {
   height: 100%;
   width: 100%;
   min-height: 100%;
-  position: absolute;
   top: 0px;
   left: 0px;
   right: 0px;
@@ -4782,8 +4767,9 @@ input[type=range]::-ms-thumb {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    width: 100vw; }
+    height: calc(100vh - 200px);
+    width: 100vw;
+    margin: 100px 0px; }
   .tile-view .filmstrip__videos .videocontainer:not(.active-speaker), .tile-view .filmstrip__videos .videocontainer:hover:not(.active-speaker) {
     border: none;
     box-shadow: none; }
@@ -4819,9 +4805,9 @@ input[type=range]::-ms-thumb {
     box-sizing: border-box;
     display: flex;
     flex-wrap: wrap;
-    height: 100vh;
-    justify-content: center;
-    padding: 100px 0; }
+    margin-top: auto;
+    margin-bottom: auto;
+    justify-content: center; }
     .tile-view #filmstripRemoteVideosContainer .videocontainer {
       border: 0;
       box-sizing: border-box;
@@ -5791,74 +5777,56 @@ input[type=range]::-ms-thumb {
   bottom: 0;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
   cursor: pointer;
-  height: 18px;
+  height: 16px;
   position: absolute;
   text-align: center;
-  right: 2px;
-  width: 18px; }
-  .settings-button-small-icon:hover {
-    background-color: #daebfa; }
+  right: 4px;
+  width: 16px; }
   .settings-button-small-icon > svg {
     margin-top: 5px; }
   .settings-button-small-icon--disabled {
     background-color: #a4b8d1;
     cursor: default; }
-    .settings-button-small-icon--disabled:hover {
-      background-color: #a4b8d1; }
+  .settings-button-small-icon--hovered {
+    bottom: -1px;
+    height: 20px;
+    right: 2px;
+    width: 20px; }
+    .settings-button-small-icon--hovered > svg {
+      margin-top: 6px; }
 
 .jitsi-icon.metr {
   display: inline-block; }
   .jitsi-icon.metr > svg {
-    fill: #76CF9C;
+    fill: #4E5E6C;
     width: 38px; }
 
 .jitsi-icon.metr--disabled > svg {
-  fill: #5E6D7A; }
+  fill: #4E5E6C; }
 
 .metr-l-0 rect:first-child {
-  fill: #279255; }
+  fill: #31B76A; }
 
 .metr-l-1 rect:nth-child(-n+2) {
   fill: #31B76A; }
 
-.metr-l-1 rect:first-child {
-  fill: #279255; }
-
 .metr-l-2 rect:nth-child(-n+3) {
   fill: #31B76A; }
-
-.metr-l-2 rect:first-child {
-  fill: #279255; }
 
 .metr-l-3 rect:nth-child(-n+4) {
   fill: #31B76A; }
 
-.metr-l-3 rect:first-child {
-  fill: #279255; }
-
 .metr-l-4 rect:nth-child(-n+5) {
   fill: #31B76A; }
-
-.metr-l-4 rect:first-child {
-  fill: #279255; }
 
 .metr-l-5 rect:nth-child(-n+6) {
   fill: #31B76A; }
 
-.metr-l-5 rect:first-child {
-  fill: #279255; }
-
 .metr-l-6 rect:nth-child(-n+7) {
   fill: #31B76A; }
 
-.metr-l-6 rect:first-child {
-  fill: #279255; }
-
 .metr-l-7 rect:nth-child(-n+8) {
   fill: #31B76A; }
-
-.metr-l-7 rect:first-child {
-  fill: #279255; }
 
 .audio-preview-content {
   font-size: 15px;
@@ -5872,6 +5840,7 @@ input[type=range]::-ms-thumb {
   display: flex;
   padding: 16px; }
   .audio-preview-header-icon {
+    color: #A4B8D1;
     display: inline-block; }
   .audio-preview-header-text {
     font-weight: bold;
@@ -5909,6 +5878,8 @@ input[type=range]::-ms-thumb {
       padding-left: 21px; }
   .audio-preview-speaker:hover .audio-preview-test-button {
     display: inline-block; }
+  .audio-preview-speaker:hover .audio-preview-entry-text {
+    max-width: 196px; }
   .audio-preview-speaker .audio-preview-entry-text {
     max-width: 256px; }
 
@@ -5949,38 +5920,57 @@ input[type=range]::-ms-thumb {
   right: 16px;
   top: 18px; }
 
-.video-preview-entry {
-  cursor: pointer;
-  height: 135px;
-  margin-bottom: 16px;
-  position: relative;
-  width: 240px; }
-  .video-preview-entry:last-child {
-    margin-bottom: 0; }
-  .video-preview-entry--selected {
-    border: 3px solid #31B76A;
-    cursor: default;
-    height: 129px;
-    width: 234px; }
+.audio-preview > div > div:nth-child(2) > div > div {
+  outline: none;
+  padding: 0; }
 
-.video-preview-video {
-  height: 100%;
-  object-fit: cover;
-  width: 100%; }
-
-.video-preview-overlay {
-  background: rgba(42, 58, 75, 0.6);
-  height: 100%;
-  position: absolute;
-  width: 100%;
-  z-index: 1; }
-
-.video-preview-error {
-  align-items: center;
-  display: flex;
-  height: 100%;
-  justify-content: center;
-  position: absolute;
-  width: 100%; }
+.video-preview {
+  background: none;
+  max-height: 290px;
+  overflow: auto; }
+  .video-preview-entry {
+    cursor: pointer;
+    height: 135px;
+    margin-bottom: 16px;
+    position: relative;
+    width: 240px; }
+    .video-preview-entry:last-child {
+      margin-bottom: 0; }
+    .video-preview-entry--selected {
+      border: 3px solid #31B76A;
+      cursor: default;
+      height: 129px;
+      width: 234px; }
+  .video-preview-video {
+    height: 100%;
+    object-fit: cover;
+    width: 100%; }
+  .video-preview-overlay {
+    background: rgba(42, 58, 75, 0.6);
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    z-index: 1; }
+  .video-preview-error {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    position: absolute;
+    width: 100%; }
+  .video-preview-label {
+    color: #fff;
+    font-size: 13px;
+    line-height: 20px;
+    overflow: hidden;
+    padding: 8px;
+    position: absolute;
+    text-align: center;
+    text-overflow: ellipsis;
+    width: 220px;
+    z-index: 2; }
+  .video-preview > div > div:nth-child(2) > div > div {
+    outline: none;
+    padding: 16px; }
 
 /* Modules END */
