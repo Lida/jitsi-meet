@@ -1,5 +1,5 @@
 BUILD_DIR = build
-CLEANCSS = exec ./node_modules/.bin/cleancss
+CLEANCSS = ./node_modules/.bin/cleancss
 DEPLOY_DIR = libs
 LIBJITSIMEET_DIR = node_modules/lib-jitsi-meet/
 LIBFLAC_DIR = node_modules/libflacjs/dist/min/
