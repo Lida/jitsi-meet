@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import 'aframe';
 import 'aframe-physics-system';
 import 'aframe-template-component';
@@ -8,9 +8,10 @@ import { Conference } from '../../../features/conference';
 import { useParams } from 'react-router-dom';
 import Board from './Board';
 import UI from './UI';
+import convert from 'xml-js';
+import { gameLoaded } from './actions';
 
 import type { Dispatch } from 'redux';
-import { useSelector } from 'react-redux';
 
 
 import { setRoom } from '../../../features/base/conference';
@@ -22,14 +23,11 @@ import {
     setConfig,
     storeConfig
 } from '../../../features/base/config';
-import { connect, disconnect, setLocationURL } from '../../../features/base/connection';
+import { connect, setLocationURL } from '../../../features/base/connection';
 import { loadConfig } from '../../../features/base/lib-jitsi-meet';
-import { createDesiredLocalTracks } from '../../../features/base/tracks';
 import {
     getBackendSafeRoomName,
-    getLocationContextRoot,
     parseURIString,
-    toURLString
 } from '../../../features/base/util';
 
 import logger from '../../../features/app/logger';
@@ -41,6 +39,7 @@ export default function Game() {
     let { game, room } = useParams();
     useEffect(() => {
         APP.store.dispatch(connectToRoom(room));
+        APP.store.dispatch(loadGame(game));
     }, [])
     return (
         <div>
@@ -49,6 +48,41 @@ export default function Game() {
             <Conference />
         </div>
       );    
+}
+
+function loadGame(game: string) {
+    return async (dispatch: Dispatch<any>, getState: Function) => {
+        let response = await fetch(`/assets/${game}/buildFile`);
+        let text = await response.text()
+        let buildFile = convert.xml2js(text, {
+            compact: true,
+            elementNameFn: function(val) {
+                return val.split(".").pop();
+            }
+        });
+        window.Game = buildFile
+        let maps = window.Game.BasicModule.Map.reduce((ret, map) => {
+            if (map.DrawPile) {
+                let piles = map.DrawPile.reduce((ret, pile) => {
+                    if (pile.CardSlot) {
+                        ret[pile._attributes.name] = pile.CardSlot.map((card) => {
+                            return {
+                                name: card._attributes.entryName,
+                                image: card._text.split(";")[4]
+                            }
+                        })
+                    }
+                    return ret
+                }, []);
+                ret[map._attributes.mapName] = {
+                    image: map.BoardPicker.Board._attributes.image,
+                    piles: piles
+                }
+            }
+            return ret
+        }, [])
+        dispatch(gameLoaded(maps))
+    }    
 }
 
 function connectToRoom(room: string) {

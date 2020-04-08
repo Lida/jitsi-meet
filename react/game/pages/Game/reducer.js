@@ -1,6 +1,7 @@
 import { PARTICIPANT_ID_CHANGED } from '../../../features/base/participants';
 import { ReducerRegistry, set } from '../../../features/base/redux';
 
+import { GAME_DEFINITION_LOADED } from './actionTypes';
 import {
     SET_NO_SRC_DATA_NOTIFICATION_UID,
     TRACK_ADDED,
@@ -16,7 +17,7 @@ import {
  * Listen for actions that mutate (e.g. add, remove) local and remote tracks.
  */
 ReducerRegistry.register('game/videoTracks', (state = [], action) => {
-    switch (action.type) {
+    switch (action.type) {      
     case PARTICIPANT_ID_CHANGED:
     case TRACK_NO_DATA_FROM_SOURCE:
     case TRACK_UPDATED:
@@ -43,6 +44,19 @@ ReducerRegistry.register('game/videoTracks', (state = [], action) => {
             return [ ...state, action.track ];
         }
 
+    default:
+        return state;
+    }
+});
+
+/**
+ * Listen for actions that mutate (e.g. add, remove) game data
+ */
+
+ReducerRegistry.register('game/buildFile', (state = null, action) => {
+    switch (action.type) {
+    case GAME_DEFINITION_LOADED:
+        return action.data;
     default:
         return state;
     }
