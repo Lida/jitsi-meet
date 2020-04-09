@@ -24,8 +24,18 @@ export default function Board(props) {
                 }
               });
             let boardImage = buildFile["Main Map"].image;
-            const content = nunjucks.render('scene.njk', { game, boardImage })
-            document.getElementById('aframe').innerHTML = content;    
+            let piles = buildFile["Player Deck Start Board"].piles;
+            const content = nunjucks.render('scene.njk', { game, boardImage, deck: piles["Player Card Start Deck"] })
+            document.getElementById('aframe').innerHTML = content;
+            let scene = document.getElementById('scene');
+            scene.addEventListener('click', (evt) => {
+                console.log("clicked!");
+                console.log(evt)
+            })
+            scene.addEventListener('mouseenter', (evt) => {
+                console.log("hover");
+                console.log(evt)
+            })
         }
     }, [game, buildFile]);
 

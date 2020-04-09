@@ -66,9 +66,11 @@ function loadGame(game: string) {
                 let piles = map.DrawPile.reduce((ret, pile) => {
                     if (pile.CardSlot) {
                         ret[pile._attributes.name] = pile.CardSlot.map((card) => {
+                            let fields = card._text.split(";");
+                            let image = fields[fields.length - 5]; // the fields in the node value seems to be variable based on the prototype of the card, but the last few fields seems stable
                             return {
                                 name: card._attributes.entryName,
-                                image: card._text.split(";")[4]
+                                image
                             }
                         })
                     }
