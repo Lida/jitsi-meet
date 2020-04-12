@@ -1,4 +1,4 @@
-<a-scene id="scene" cursor="rayOrigin: mouse" physics="debug: true; friction: 0.05; restitution: 0.1" embedded>
+<a-scene id="scene" cursor="rayOrigin: mouse" physics="debug: true; friction: 0.6; restitution: 0.05" embedded>
     <a-assets>
         <img id='board' src='/assets/{{game}}/images/{{boardImage}}' />
         {% for card in deck %}
@@ -20,9 +20,11 @@
     height='4'>
     </a-image>
    
+    <a-deck rotation='-90 0 0' position='0 -2 -2'>
     {% for card in deck %}
-        <a-piece position='0 0 {{ loop.index * 0.01 }}' front='#{{ card.name }}' /></a-piece>
+        <a-piece dynamic=false position='0 0 {{ loop.index0 * 0.01 - deck.length * 0.005 }}' front='#{{ card.name }}' /></a-piece>
     {% endfor %}
+    </a-deck>
 
 
     <a-box dynamic-body position='-1 0.5 -3' rotation='44 44 0' color='#4CC3D9'>

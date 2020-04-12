@@ -60,8 +60,9 @@ function loadGame(game: string) {
                 return val.split(".").pop();
             }
         });
-        window.Game = buildFile
-        let maps = window.Game.BasicModule.Map.reduce((ret, map) => {
+        window.Game = buildFile // make it available as a global for debugging purposes
+        // extract the important parts of the buildFile.
+        let maps = buildFile.BasicModule.Map.reduce((ret, map) => {
             if (map.DrawPile) {
                 let piles = map.DrawPile.reduce((ret, pile) => {
                     if (pile.CardSlot) {

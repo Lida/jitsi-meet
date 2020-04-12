@@ -6,9 +6,10 @@ AFRAME.registerComponent('piece', {
         back: {type: 'asset'}, // if null will use the same as the front but mirrored
         width: {default: 0.6},
         height: {default: 1},
-        depth: {default: 0.02}
+        depth: {default: 0.01},
+        dynamic: {default: false}
     },
-    init: function () {
+    init: function () { // initialize components to default values
         this.el.setAttribute('geometry', {primitive: 'plane'});
         this.el.setAttribute('material', {
             color: '#FFF',
@@ -16,12 +17,13 @@ AFRAME.registerComponent('piece', {
             side: 'double',
             transparent: true
         })
-        this.el.setAttribute('body', {type: 'static', shape: 'none'})
-        this.el.setAttribute('shape', {shape: 'box'})
     },
     update: function (oldData) {
         this.el.setAttribute('geometry', {width: this.data.width, height: this.data.height})
-        this.el.setAttribute('shape', 'halfExtents', {x: this.data.width / 2, y: this.data.height / 2, z: this.data.depth / 2})
+        this.el.setAttribute('body', {type: this.data.dynamic ? 'dynamic' : 'static', shape: 'none'})
+        if (this.data.dynamic) {
+            this.el.setAttribute('shape', {halfExtents: {x: this.data.width / 2, y: this.data.height / 2, z: this.data.depth / 2}, shape: 'box'})
+        }
         this.el.setAttribute('material', 'src', this.data.front)
     }
 })
@@ -36,5 +38,6 @@ AFRAME.registerPrimitive('a-piece', {
         width: 'piece.width',
         height: 'piece.height',
         depth: 'piece.depth',
+        dynamic: 'piece.dynamic'
     }
 });
