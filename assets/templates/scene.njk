@@ -1,4 +1,4 @@
-<a-scene id="scene" cursor="rayOrigin: mouse" physics="debug: true; friction: 0.6; restitution: 0.05" embedded>
+<a-scene id="scene" cursor="rayOrigin: mouse" physics="debug: true; friction: 0.6; restitution: 0.05" shadow="type: pcfsoft" embedded>
     <a-assets>
         <img id='board' src='/assets/{{game}}/images/{{boardImage}}' />
         {% for card in deck %}
@@ -13,14 +13,16 @@
     </a-entity>
     <a-entity template="src: /assets/templates/boxes.njk; type: nunjucks"
         data-box1color="red" data-box2color="green" data-box3color="blue"></a-entity>
-    <a-image
+    <a-box
+    shadow
     src= '#board'
     static-body
     position='0 -2 -3'
     rotation='-90 0 0'
     width='6'
-    height='4'>
-    </a-image>
+    height='4'
+    depth='.1'>
+    </a-box>
    
     <a-deck rotation='-90 0 0' position='0 -2 -2'>
     {% for card in deck %}
@@ -28,11 +30,12 @@
     {% endfor %}
     </a-deck>
 
-    <a-box dynamic-body position='-1 0.5 -3' rotation='44 44 0' color='#4CC3D9'>
+    <a-box dynamic-body shadow position='-1 0.5 -3' rotation='44 44 0' color='#4CC3D9'>
     </a-box>
-    <a-sphere dynamic-body position='0 1.25 -5' radius='1.25' color='#EF2D5E'>
+    <a-sphere dynamic-body shadow position='0 1.25 -5' radius='1.25' color='#EF2D5E'>
     </a-sphere>
     <a-cylinder
+    shadow
     dynamic-body 
     position='1 0.75 -3'
     radius='0.5'
@@ -42,7 +45,8 @@
     </a-cylinder>
     <a-light type='ambient' color='#445451'></a-light>
     
-    <a-light type='point' intensity='2' position='2 4 4'></a-light>
+    <a-light type='directional' intensity='.4' position='2 4 2' light='castShadow: true; shadowCameraVisible: true; shadowBias: -0.00001; shadowMapWidth: 1024; shadowMapHeight: 1024' ></a-light>
+    <a-light type='directional' intensity='.4' position='2 4 2' ></a-light>
 
     <a-sky color='#333333' />
 </a-scene>

@@ -5,7 +5,7 @@ AFRAME.registerComponent('hand', {
     },
     init: function () { // initialize components to default values
         const childMouseDown =  (evt) => {
-            console.log("clicked on a piece!");
+            console.log("clicked on piece in hand!");
             console.log(evt)
         }   
         let self = this;
