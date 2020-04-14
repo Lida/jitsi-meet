@@ -17,9 +17,10 @@ AFRAME.registerComponent('piece', {
             side: 'double',
             transparent: true
         })
+        this.el.setAttribute('velocity', {x: 0, y: 0, z: 0})
     },
     update: function (oldData) {
-        this.el.setAttribute('geometry', {width: this.data.width, height: this.data.height})
+        this.el.setAttribute('geometry', {width: this.data.width, height: this.data.height})        
         this.el.setAttribute('body', {type: this.data.dynamic ? 'dynamic' : 'static', shape: 'none'})
         if (this.data.dynamic) {
             this.el.setAttribute('shape', {halfExtents: {x: this.data.width / 2, y: this.data.height / 2, z: this.data.depth / 2}, shape: 'box'})

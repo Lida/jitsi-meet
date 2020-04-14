@@ -4,24 +4,29 @@ AFRAME.registerComponent('deck', {
     schema: {
     },
     init: function () { // initialize components to default values
+        const childMouseDown =  (evt) => {
+            console.log("clicked on a piece!");
+            console.log(evt);
+            let hand = document.getElementById('hand');
+            let el = evt.target;
+            el.flushToDOM(true);
+            let copy = el.cloneNode();            
+            hand.appendChild(copy);
+            el.parentNode.removeChild(el);
+        }    
+        let self = this
         this.el.addEventListener('child-attached', function (ev) {
-            ev.detail.el.addEventListener('mousedown', (evt) => {
-                console.log("clicked on a piece!");
-                console.log(evt)
-            })    
-            this.recomputeSize();
+            ev.detail.el.addEventListener('mousedown', childMouseDown);
+            self.recomputeSize();
         })
         this.el.addEventListener('child-detached', function (ev) {
-            this.recomputeSize();
+            ev.detail.el.removeEventListener('mousedown', childMouseDown);
+            self.recomputeSize();
         })
         this.el.setAttribute('body', {type: 'dynamic', shape: 'none'});
         this.el.setAttribute('shape', 'shape', 'box');
         for (const el of this.el.children) {
-            el.addEventListener('mousedown', (evt) => {
-                console.log("clicked on a piece!");
-                console.log(evt)
-                evt.preventDefault()
-            })    
+            el.addEventListener('mousedown', childMouseDown);
         }
     },
     update: function(oldData) {
