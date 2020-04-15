@@ -65,11 +65,13 @@ A deck is specific by the following
 
 Here are a list of actions for a deck
 * shuffle
-* draw X top
-* draw X bottom
+* draw from top
+* draw from bottom
 * split X piles
 * place cards on top
 
 A deck can specify exactly which operations are allowed. Such as discard piles only allow cards to be placed face up or down.
 
 Deck should also be placed at a certain location on the board.
+
+Each player can have a **Hand** which is contains a list of cards that only the player can see. The list is ordered so the player can arrange the cards however they like but others won't be able to see that occur. When a deck is drawn, the card is added to the player's hand. Card can also be placed onto the board. It can be placed into a deck, on top, or on bottom.

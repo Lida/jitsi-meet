@@ -5,10 +5,9 @@ AFRAME.registerComponent('deck', {
     },
     init: function () { // initialize components to default values
         const childMouseDown =  (evt) => {
-            console.log("clicked on a piece!");
-            console.log(evt);
+            console.log("clicked on a deck!");
             let hand = document.getElementById('hand');
-            let el = evt.target;
+            let el = this.el.lastElementChild;
             el.flushToDOM(true);
             let copy = el.cloneNode();            
             hand.appendChild(copy);

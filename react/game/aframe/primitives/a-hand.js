@@ -3,27 +3,78 @@ import 'aframe';
 AFRAME.registerComponent('hand', {
     schema: {
     },
-    init: function () { // initialize components to default values
+    init: function () {
+        if (this.el.sceneEl.hasLoaded) {
+            this._init();
+        } else {
+            this.el.sceneEl.addEventListener('loaded', this._init.bind(this));
+        }        
+    },
+    _init: function () { // initialize components to default values
+        let self = this;
+        this.raycaster = this.el.sceneEl.components.raycaster;
+
         const childMouseDown =  (evt) => {
             console.log("clicked on piece in hand!");
-            console.log(evt)
+            console.log(evt);
+            self.draggingEl = evt.target;
+            self.draggingEl.object3D.updateMatrix();
+            self.draggingEl.object3D.updateMatrixWorld();
+            self.draggingEl.sceneEl.object3D.attach(self.draggingEl.object3D);
         }   
-        let self = this;
+
+        const childMouseUp =  (evt) => {
+            console.log("released piece in hand!");
+            console.log(evt);
+            // reflect certain components for performance, see https://aframe.io/docs/1.0.0/introduction/javascript-events-dom-apis.html#updating-position-rotation-scale-visible
+            self.draggingEl.object3D.updateMatrix();
+            self.draggingEl.object3D.updateMatrixWorld();
+            self.draggingEl.setAttribute('position', self.draggingEl.getAttribute('position'));
+            self.draggingEl.setAttribute('rotation', self.draggingEl.getAttribute('rotation'));
+            self.draggingEl.flushToDOM(true);
+            let copy = self.draggingEl.cloneNode();            
+            self.el.sceneEl.appendChild(copy);
+            self.el.removeChild(self.draggingEl);
+            self.draggingEl = null;
+            this.recomputeHand();
+        }   
+
 
         this.el.addEventListener('child-attached', function (ev) {
             ev.detail.el.addEventListener('mousedown', childMouseDown)    
+            ev.detail.el.addEventListener('mouseup', childMouseUp)
             self.recomputeHand();
         })
         this.el.addEventListener('child-detached', function (ev) {
             ev.detail.el.removeEventListener('mousedown', childMouseDown)
+            ev.detail.el.addEventListener('mouseup', childMouseUp)
             self.recomputeHand();
         })
         for (const el of this.el.children) {
             el.addEventListener('mousedown', childMouseDown)    
+            el.addEventListener('mouseup', childMouseUp)
         }
     },
     update: function(oldData) {
-        this.recomputeHand()
+        this.recomputeHand();
+    },
+    tock: function() {
+        if (this.draggingEl) { // find target location for dragged piece in hand
+            let distance = 1000;
+            let closest = null;
+            for (const el of this.raycaster.intersectedEls) {
+                let intersection = this.raycaster.getIntersection(el);
+                if (intersection.distance < distance && el != this.draggingEl) {
+                    distance = intersection.distance;
+                    closest = intersection;
+                }
+            }
+            if (closest) {
+                this.draggingEl.object3D.position.copy(closest.point);
+                this.draggingEl.object3D.lookAt(closest.face.normal.x + closest.point.x, closest.face.normal.y + closest.point.y, closest.face.normal.z + closest.point.z);
+                this.draggingEl.object3D.rotateX(-Math.PI / 2);
+            }
+        }
     },
     recomputeHand() {
         for (let i = 0; i < this.el.children.length; i++) {
