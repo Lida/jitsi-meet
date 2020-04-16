@@ -58,24 +58,6 @@ AFRAME.registerComponent('hand', {
     update: function(oldData) {
         this.recomputeHand();
     },
-    tock: function() {
-        if (this.draggingEl) { // find target location for dragged piece in hand
-            let distance = 1000;
-            let closest = null;
-            for (const el of this.raycaster.intersectedEls) {
-                let intersection = this.raycaster.getIntersection(el);
-                if (intersection.distance < distance && el != this.draggingEl) {
-                    distance = intersection.distance;
-                    closest = intersection;
-                }
-            }
-            if (closest) {
-                this.draggingEl.object3D.position.copy(closest.point);
-                this.draggingEl.object3D.lookAt(closest.face.normal.x + closest.point.x, closest.face.normal.y + closest.point.y, closest.face.normal.z + closest.point.z);
-                this.draggingEl.object3D.rotateX(-Math.PI / 2);
-            }
-        }
-    },
     recomputeHand() {
         for (let i = 0; i < this.el.children.length; i++) {
             const el = this.el.children[i]

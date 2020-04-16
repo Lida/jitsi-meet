@@ -102,11 +102,11 @@ AFRAME.registerComponent('game-controls', {
   setupMouseControls: function () {
     this.mouseDown = false;
     this.pitchObject = new THREE.Object3D();
-    this.pitchObject.rotation.x = this.el.object3D.rotation.x
+    this.pitchObject.rotation.x = this.el.object3D.rotation.x;
     this.yawObject = new THREE.Object3D();
     this.yawObject.position.y = 10;
     this.yawObject.add(this.pitchObject);
-    this.yawObject.rotation.y = this.el.object3D.rotation.y
+    this.yawObject.rotation.y = this.el.object3D.rotation.y;
   },
 
   /**

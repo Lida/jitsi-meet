@@ -15,6 +15,7 @@
     shadow
     src='#board'
     static-body
+    draggable='false'
     position='0 -2 -3'
     rotation='-90 0 0'
     width='6'
@@ -27,6 +28,11 @@
         <a-piece dynamic=false position='0 0 {{ loop.index0 * 0.01 - deck.length * 0.005 }}' front='#{{ card.name }}' /></a-piece>
     {% endfor %}
     </a-deck>
+
+    <a-piece dynamic=true position='0, -2, -3' width='.1' height='.1' depth='.1' color='#F22' /></a-piece>
+    <a-piece dynamic=true position='0, -1.9, -3' width='.1' height='.1' depth='.1' color='#22F' /></a-piece>
+    <a-piece dynamic=true position='0, -1.8, -3' width='.1' height='.1' depth='.1' color='#222' /></a-piece>
+    <a-piece dynamic=true position='0, -1.7, -3' width='.1' height='.1' depth='.1' color='#FF2' /></a-piece>
 
     <a-box dynamic-body shadow position='-1 0.5 -3' rotation='44 44 0' color='#4CC3D9'>
     </a-box>
