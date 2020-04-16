@@ -8,16 +8,15 @@ AFRAME.registerComponent('piece', {
         height: {default: 1},
         depth: {default: 0.01},
         color: {default: '#FFF'},
-        dynamic: {default: false},
+        dynamic: {default: true}, // if piece is not dynamic, then it isn't part of physics
         hoverHeight: {default: 0.2}, // how high to hover while dragged
-        draggable: {default: true}
+        draggable: {default: true} // if piece is not draggable, then it is a kinematic physics object
     },
     init: function () { // initialize components to default values
         this.el.setAttribute('geometry', {primitive: 'box'});
         this.el.setAttribute('material', {
             color: this.data.color,
         })
-        this.el.setAttribute('velocity', {x: 0, y: 0, z: 0})
         this.el.addEventListener('mousedown', this.mouseDownHandler.bind(this));
         this.el.addEventListener('mouseup', this.mouseUpHandler.bind(this));
         this.defaultMouseDown = this.defaultMouseDown.bind(this);
@@ -25,13 +24,12 @@ AFRAME.registerComponent('piece', {
     },
     update: function (oldData) {
         this.el.setAttribute('geometry', {width: this.data.width, height: this.data.height, depth: this.data.depth})
-        if (!oldData || oldData.dynamic != this.data.dynamic) {
-            this.el.removeAttribute('body');
-            this.el.removeAttribute('shape');
-            this.el.setAttribute('body', {type: this.data.dynamic ? 'dynamic' : 'static', shape: 'none'})
-            if (this.data.dynamic) {
-                this.el.setAttribute('shape', {halfExtents: {x: this.data.width / 2, y: this.data.height / 2, z: this.data.depth / 2}, shape: 'box'})
-            }    
+        if (this.data.dynamic) {
+            this.el.setAttribute('ammo-body', {type: this.data.draggable ? 'dynamic' : 'kinematic'})
+            this.el.setAttribute('ammo-shape', {type: 'box'})
+        } else {
+            this.el.removeAttribute('ammo-shape');
+            this.el.removeAttribute('ammo-body');
         }
         this.el.setAttribute('material', 'src', this.data.front)
     },
@@ -58,9 +56,25 @@ AFRAME.registerComponent('piece', {
                 quat.setFromUnitVectors(this.el.object3D.up, normal);
                 this.el.object3D.setRotationFromQuaternion(quat);
                 this.el.object3D.rotateX(-Math.PI / 2);
-                if (this.el.body) {
-                    this.el.body.position.copy(hoverPosition);                    
-                }
+                // if (this.el.body) {
+                //     let tmpPos = new THREE.Vector3();
+                //     let tmpQuat = new THREE.Quaternion();
+                //     this.el.object3D.getWorldPosition(tmpPos);
+                //     this.el.object3D.getWorldQuaternion(tmpQuat);
+            
+                //     let ammoTmpPos = new Ammo.btVector3();
+                //     let ammoTmpQuat = new Ammo.btQuaternion();
+                //     let ammoTmpTrans = new Ammo.btTransform();            
+                //     ammoTmpPos.setValue(tmpPos.x, tmpPos.y, tmpPos.z);
+                //     ammoTmpQuat.setValue( tmpQuat.x, tmpQuat.y, tmpQuat.z, tmpQuat.w);
+                //     ammoTmpTrans.setIdentity();
+                //     ammoTmpTrans.setOrigin(ammoTmpPos); 
+                //     ammoTmpTrans.setRotation(ammoTmpQuat); 
+                //     this.el.body.setWorldTransform(ammoTmpTrans);
+                //     Ammo.destroy(ammoTmpPos);
+                //     Ammo.destroy(ammoTmpQuat);
+                //     Ammo.destroy(ammoTmpTrans);
+                // }
             }
         }
     },
@@ -84,7 +98,7 @@ AFRAME.registerComponent('piece', {
         (this.onmousedown || this.defaultMouseDown)(evt);
     },
     mouseUpHandler: function(evt) {
-        if (this.data.draggable) {
+        if (this.el.is('dragged')) {
             this.el.removeState('dragged');
             this.el.setAttribute('piece', 'dynamic', 'true');    
         }

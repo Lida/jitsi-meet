@@ -38,7 +38,7 @@ declare var interfaceConfig: Object;
 export default function Game() {
     let { game, room } = useParams();
     useEffect(() => {
-        APP.store.dispatch(connectToRoom(room));
+        //APP.store.dispatch(connectToRoom(room));
         APP.store.dispatch(loadGame(game));
     }, [])
     return (

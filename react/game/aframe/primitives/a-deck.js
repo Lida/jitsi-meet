@@ -22,11 +22,10 @@ AFRAME.registerComponent('deck', {
             ev.detail.el.removeEventListener('mousedown', childMouseDown);
             self.recomputeSize();
         })
-        this.el.setAttribute('body', {type: 'dynamic', shape: 'none'});
-        this.el.setAttribute('shape', 'shape', 'box');
         for (const el of this.el.children) {
             el.addEventListener('mousedown', childMouseDown);
         }
+        this.el.setAttribute('ammo-body', {type: 'dynamic'});
     },
     update: function(oldData) {
         this.recomputeSize();
@@ -42,7 +41,8 @@ AFRAME.registerComponent('deck', {
             y = Math.max(y, piece.height / 2);
             z += piece.depth / 2;
         }
-        this.el.setAttribute('shape', {halfExtents: {x, y, z}});
+        this.el.removeAttribute('ammo-shape'); // physics driver doesn't handle shape updates
+        this.el.setAttribute('ammo-shape', {type: 'box', fit: 'manual', halfExtents: {x, y, z}});
     }
 })
 
