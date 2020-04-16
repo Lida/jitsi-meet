@@ -9,6 +9,7 @@ AFRAME.registerComponent('piece', {
         depth: {default: 0.01},
         color: {default: '#FFF'},
         dynamic: {default: false},
+        hoverHeight: {default: 0.2}, // how high to hover while dragged
         draggable: {default: true}
     },
     init: function () { // initialize components to default values
@@ -24,9 +25,13 @@ AFRAME.registerComponent('piece', {
     },
     update: function (oldData) {
         this.el.setAttribute('geometry', {width: this.data.width, height: this.data.height, depth: this.data.depth})
-        this.el.setAttribute('body', {type: this.data.dynamic ? 'dynamic' : 'static', shape: 'none'})
-        if (this.data.dynamic) {
-            this.el.setAttribute('shape', {halfExtents: {x: this.data.width / 2, y: this.data.height / 2, z: this.data.depth / 2}, shape: 'box'})
+        if (!oldData || oldData.dynamic != this.data.dynamic) {
+            this.el.removeAttribute('body');
+            this.el.removeAttribute('shape');
+            this.el.setAttribute('body', {type: this.data.dynamic ? 'dynamic' : 'static', shape: 'none'})
+            if (this.data.dynamic) {
+                this.el.setAttribute('shape', {halfExtents: {x: this.data.width / 2, y: this.data.height / 2, z: this.data.depth / 2}, shape: 'box'})
+            }    
         }
         this.el.setAttribute('material', 'src', this.data.front)
     },
@@ -43,11 +48,18 @@ AFRAME.registerComponent('piece', {
                 }
             }
             if (closest) {
-                this.el.object3D.position.copy(closest.point);
-                this.el.object3D.lookAt(closest.face.normal.x + closest.point.x, closest.face.normal.y + closest.point.y, closest.face.normal.z + closest.point.z);
+                let normal = new THREE.Vector3(closest.face.normal.x, closest.face.normal.y, closest.face.normal.z);
+                let quat = new THREE.Quaternion();
+                quat.setFromRotationMatrix(closest.object.matrixWorld);
+                normal.applyQuaternion(quat);
+
+                let hoverPosition = {x: normal.x * this.data.hoverHeight + closest.point.x, y: normal.y * this.data.hoverHeight + closest.point.y, z: normal.z * this.data.hoverHeight + closest.point.z};
+                this.el.object3D.position.copy(hoverPosition);
+                quat.setFromUnitVectors(this.el.object3D.up, normal);
+                this.el.object3D.setRotationFromQuaternion(quat);
                 this.el.object3D.rotateX(-Math.PI / 2);
                 if (this.el.body) {
-                    this.el.body.position.copy(closest.point);                    
+                    this.el.body.position.copy(hoverPosition);                    
                 }
             }
         }
@@ -67,11 +79,15 @@ AFRAME.registerComponent('piece', {
     mouseDownHandler: function(evt) {
         if (this.data.draggable) {
             this.el.addState('dragged');
+            this.el.setAttribute('piece', 'dynamic', 'false');
         }
         (this.onmousedown || this.defaultMouseDown)(evt);
     },
     mouseUpHandler: function(evt) {
-        this.el.removeState('dragged');
+        if (this.data.draggable) {
+            this.el.removeState('dragged');
+            this.el.setAttribute('piece', 'dynamic', 'true');    
+        }
         (this.onmouseup || this.defaultMouseUp)(evt);
     }
 })
@@ -89,6 +105,7 @@ AFRAME.registerPrimitive('a-piece', {
         depth: 'piece.depth',
         color: 'piece.color',
         dynamic: 'piece.dynamic',
-        draggable: 'piece.draggable'
+        draggable: 'piece.draggable',
+        "hover-height": 'piece.hoverHeight'
     }
 });

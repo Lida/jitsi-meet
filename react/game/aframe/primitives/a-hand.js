@@ -31,6 +31,7 @@ AFRAME.registerComponent('hand', {
             self.draggingEl.object3D.updateMatrixWorld();
             self.draggingEl.setAttribute('position', self.draggingEl.getAttribute('position'));
             self.draggingEl.setAttribute('rotation', self.draggingEl.getAttribute('rotation'));
+            self.draggingEl.setAttribute('piece', 'dynamic', true);
             self.draggingEl.flushToDOM(true);
             let copy = self.draggingEl.cloneNode();            
             self.el.sceneEl.appendChild(copy);
