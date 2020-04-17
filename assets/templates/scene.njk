@@ -12,6 +12,7 @@
     </a-entity>
     <a-entity template="src: /assets/templates/boxes.njk; type: nunjucks"
         data-box1color="red" data-box2color="green" data-box3color="blue"></a-entity>
+    <a-box id="ground" height="1000" width="1000" color="#111" depth="2" ammo-body="type: static" ammo-shape="type: box" position='0 -3 0'  rotation="-90 0 0"></a-box>
     <a-piece front='#board' 
     shadow
     src='#board'
@@ -25,7 +26,7 @@
    
     <a-deck rotation='90 0 0' position='0 -2 -2'>
     {% for card in deck %}
-        <a-piece dynamic=false draggable=false depth=".035" position='0 0 {{ loop.index0 * 0.01 - deck.length * 0.005 }}' front='#{{ card.name }}' back='#Player Card Back' /></a-piece>
+        <a-piece front='#{{ card.name }}' back='#Player Card Back' /></a-piece>
     {% endfor %}
     </a-deck>
 
@@ -50,8 +51,8 @@
     </a-cylinder>
     <a-light type='ambient' color='#445451'></a-light>
     
-    <a-light type='directional' intensity='.4' position='2 4 2' light='castShadow: true; shadowCameraVisible: true; shadowBias: -0.00001; shadowMapWidth: 1024; shadowMapHeight: 1024' ></a-light>
-    <a-light type='directional' intensity='.4' position='2 4 2' ></a-light>
+    <a-light type='spot' intensity='.4' position='2 4 2' rotation="-18 5 0"  light='castShadow: true; shadowCameraVisible: true; shadowBias: -0.00001; shadowMapWidth: 1024; shadowMapHeight: 1024' ></a-light>
+    <a-light type='spot' intensity='.4' position='2 4 2' rotation="-18 5 0" ></a-light>
 
     <a-sky color='#333333' />
 </a-scene>

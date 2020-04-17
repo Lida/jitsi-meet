@@ -41,7 +41,7 @@
     "@tensorflow/tfjs": "1.5.1",
     "@webcomponents/url": "0.7.1",
     "aframe": "1.0.4",
-    "aframe-physics-system": "github:lida/aframe-physics-system#4611f1ab32667f4fa953bf0930a05d65126d9115",
+    "aframe-physics-system": "github:lida/aframe-physics-system#f456e12a57cc7f98587e815bbaa863ec94e12e6f",
     "aframe-state-component": "^6.8.0",
     "aframe-template-component": "^3.2.1",
     "amplitude-js": "4.5.2",
