@@ -4,6 +4,7 @@
         {% for card in deck %}
         <img id='{{ card.name }}' src='/assets/{{game}}/images/{{card.image}}' />
         {% endfor %}
+        <img id='Player Card Back' src='/assets/{{game}}/images/Player Card Back.jpg' />
     </a-assets>
     <a-entity id='rig' position="0 2 -2" rotation="-80 0 0" camera="fov: 70" wasd-controls="acceleration: 100" game-controls>
         <a-hand id='hand' position='0 -1.5 -2'>
@@ -22,9 +23,9 @@
     depth='.1'
     /></a-piece>
    
-    <a-deck rotation='-90 0 0' position='0 -2 -2'>
+    <a-deck rotation='90 0 0' position='0 -2 -2'>
     {% for card in deck %}
-        <a-piece dynamic=false depth=".035" position='0 0 {{ loop.index0 * 0.01 - deck.length * 0.005 }}' front='#{{ card.name }}' /></a-piece>
+        <a-piece dynamic=false draggable=false depth=".035" position='0 0 {{ loop.index0 * 0.01 - deck.length * 0.005 }}' front='#{{ card.name }}' back='#Player Card Back' /></a-piece>
     {% endfor %}
     </a-deck>
 

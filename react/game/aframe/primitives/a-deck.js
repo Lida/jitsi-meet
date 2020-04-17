@@ -8,10 +8,12 @@ AFRAME.registerComponent('deck', {
             console.log("clicked on a deck!");
             let hand = document.getElementById('hand');
             let el = this.el.lastElementChild;
+            el.setAttribute("draggable", true); // for consistency sake since setting it doesn't do anything after initialization mapping
+            el.setAttribute("piece", "draggable", true);
             el.flushToDOM(true);
             let copy = el.cloneNode();            
-            hand.appendChild(copy);
             el.parentNode.removeChild(el);
+            hand.appendChild(copy);
         }    
         let self = this
         this.el.addEventListener('child-attached', function (ev) {

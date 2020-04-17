@@ -2,11 +2,11 @@ import 'aframe';
 
 AFRAME.registerComponent('piece', {
     schema: {
-        front: {type: 'asset'},
-        back: {type: 'asset'}, // if null will use the same as the front but mirrored
+        front: {type: 'string'},
+        back: {type: 'string'}, // if null will use the same as the front but mirrored
         width: {default: 0.6},
         height: {default: 1},
-        depth: {default: 0.01},
+        depth: {default: 0.035},
         color: {default: '#FFF'},
         dynamic: {default: true}, // if piece is not dynamic, then it isn't part of physics
         hoverHeight: {default: 0.2}, // how high to hover while dragged
@@ -31,7 +31,7 @@ AFRAME.registerComponent('piece', {
             this.el.removeAttribute('ammo-shape');
             this.el.removeAttribute('ammo-body');
         }
-        this.el.setAttribute('material', 'src', this.data.front)
+        this.el.setAttribute('multisrc', {src4: this.data.front, src5: this.data.back || this.data.front })
     },
     tock: function() {
         if (this.el.is('dragged')) { // find target location for dragged piece

@@ -5,5 +5,6 @@ import 'aframe-physics-system';
 import 'aframe-template-component';
 import 'aframe-state-component';
 
+import './multisrc';
 import './game-controls';
 import './primitives';
