@@ -50,6 +50,26 @@ export default function Game() {
       );    
 }
 
+// Parse the weird serialization data in buildFile
+function parseText(text) {
+    let command = text.split('/');
+    return {
+        command: command[0],
+        id: command[1],
+        type: command[2].split("\t").reduce((ret, type) => {
+            let value = type.split(";").map((v) => {
+                while (v.indexOf("\\") >= 0) {
+                    v = v.replace('\\', ''); // There is some escape string encoding \ that we need to strip. Not sure what \ decodes to though
+                }
+                return v;
+            })
+            ret[value[0]] = value
+            return ret
+        }, {}),
+        state: command[3]
+    }
+}
+
 function loadGame(game: string) {
     return async (dispatch: Dispatch<any>, getState: Function) => {
         let response = await fetch(`/assets/${game}/buildFile`);
@@ -62,16 +82,21 @@ function loadGame(game: string) {
         });
         window.Game = buildFile // make it available as a global for debugging purposes
         // extract the important parts of the buildFile.
+        let prototypes = window.Game.BasicModule.PrototypesContainer.PrototypeDefinition.reduce((ret, prototype) => {
+            ret[prototype._attributes.name] = parseText(prototype._text)
+            return ret
+        }, {});
         let maps = buildFile.BasicModule.Map.reduce((ret, map) => {
             if (map.DrawPile) {
                 let piles = map.DrawPile.reduce((ret, pile) => {
                     if (pile.CardSlot) {
                         ret[pile._attributes.name] = pile.CardSlot.map((card) => {
-                            let fields = card._text.split(";");
-                            let image = fields[fields.length - 5]; // the fields in the node value seems to be variable based on the prototype of the card, but the last few fields seems stable
+                            let data = parseText(card._text);
+                            let image = data.type.piece[3]; // https://github.com/fifa0329/vassal/tree/master/src/VASSAL/counters/BasicPiece.java#L129
                             return {
                                 name: card._attributes.entryName,
-                                image
+                                front: image,
+                                back: data.type.prototype && prototypes[data.type.prototype[1]] && prototypes[data.type.prototype[1]].type.obs ? prototypes[data.type.prototype[1]].type.obs[2] : null // Get prototype's obs image if there is a prototype
                             }
                         })
                     }

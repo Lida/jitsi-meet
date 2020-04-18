@@ -2,7 +2,7 @@
     <a-assets>
         <img id='board' src='/assets/{{game}}/images/{{boardImage}}' />
         {% for card in deck %}
-        <img id='{{ card.name }}' src='/assets/{{game}}/images/{{card.image}}' />
+        <img id='{{ card.name }}' src='/assets/{{game}}/images/{{card.front}}' />
         {% endfor %}
         <img id='Player Card Back' src='/assets/{{game}}/images/Player Card Back.jpg' />
     </a-assets>
@@ -10,8 +10,6 @@
         <a-hand id='hand' position='0 -1.5 -2'>
         </a-hand>
     </a-entity>
-    <a-entity template="src: /assets/templates/boxes.njk; type: nunjucks"
-        data-box1color="red" data-box2color="green" data-box3color="blue"></a-entity>
     <a-box id="ground" height="1000" width="1000" color="#111" depth="2" ammo-body="type: static" ammo-shape="type: box" position='0 -3 0'  rotation="-90 0 0"></a-box>
     <a-piece front='#board' 
     shadow
@@ -24,7 +22,7 @@
     depth='.1'
     /></a-piece>
    
-    <a-deck rotation='90 0 0' position='0 -2 -2'>
+    <a-deck rotation='90 0 0' position='0.33 -2 -1.53'>
     {% for card in deck %}
         <a-piece front='#{{ card.name }}' back='#Player Card Back' /></a-piece>
     {% endfor %}
@@ -35,20 +33,6 @@
     <a-piece position='0, -1.8, -3' width='.1' height='.1' depth='.1' color='#222' /></a-piece>
     <a-piece position='0, -1.7, -3' width='.1' height='.1' depth='.1' color='#FF2' /></a-piece>
 
-    <a-box ammo-body="type: dynamic" ammo-shape="type: box" shadow position='-1 0.5 -3' rotation='44 44 0' color='#4CC3D9'>
-    </a-box>
-    <a-sphere ammo-body="type: dynamic" ammo-shape="type: sphere" shadow position='0 1.25 -5' radius='1.25' color='#EF2D5E'>
-    </a-sphere>
-    <a-cylinder
-    shadow
-    ammo-body="type: dynamic"
-    ammo-shape="type: cylinder" 
-    position='1 0.75 -3'
-    radius='0.5'
-    height='1.5'
-    color='#FFC65D'
-    >
-    </a-cylinder>
     <a-light type='ambient' color='#445451'></a-light>
     
     <a-light type='spot' intensity='.4' position='2 4 2' rotation="-18 5 0"  light='castShadow: true; shadowCameraVisible: true; shadowBias: -0.00001; shadowMapWidth: 1024; shadowMapHeight: 1024' ></a-light>
