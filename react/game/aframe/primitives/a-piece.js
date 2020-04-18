@@ -4,8 +4,8 @@ AFRAME.registerComponent('piece', {
     schema: {
         front: {type: 'string'},
         back: {type: 'string'}, // if null will use the same as the front but mirrored
-        width: {default: 0.6},
-        height: {default: 1},
+        width: {default: 0.55},
+        height: {default: .85},
         depth: {default: 0.035},
         color: {default: '#FFF'},
         dynamic: {default: true}, // if piece is not dynamic, then it isn't part of physics
