@@ -24,7 +24,7 @@ export default function Board(props) {
             let boardImage = buildFile["Main Map"].image;
             let piles = buildFile["Player Deck Start Board"].piles;
             // use template to setup asset management and scene initialization
-            const content = nunjucks.render('scene.njk', { game, boardImage, deck: piles["Player Card Start Deck"] })
+            const content = nunjucks.render('scene.njk', { game, boardImage, playerdeck: piles["Player Card Start Deck"], infectiondeck: buildFile["Main Map"].piles['Infection "Bottom of Deck"'] })
             let aframe = document.getElementById('aframe');
             aframe.addEventListener('contextmenu', (evt) => {
                 console.log("context menu on aframe");

@@ -1,10 +1,14 @@
 <a-scene id="scene" cursor="rayOrigin: mouse" raycaster="far: 20; objects: a-piece" physics="driver: ammo; debug: true;" shadow="type: pcfsoft" embedded>
     <a-assets>
         <img id='board' src='/assets/{{game}}/images/{{boardImage}}' />
-        {% for card in deck %}
+        {% for card in playerdeck %}
         <img id='{{ card.name }}' src='/assets/{{game}}/images/{{card.front}}' />
         {% endfor %}
-        <img id='Player Card Back' src='/assets/{{game}}/images/Player Card Back.jpg' />
+        {% for card in infectiondeck %}
+        <img id='{{ card.name }}' src='/assets/{{game}}/images/{{card.front}}' />
+        {% endfor %}
+        <img id='Player Card Back' src='/assets/{{game}}/images/{{ playerdeck[0].back }}' />
+        <img id='Infection Card Back' src='/assets/{{game}}/images/{{ infectiondeck[0].back }}' />
     </a-assets>
     <a-entity id='rig' position="0 2 -2" rotation="-80 0 0" camera="fov: 70" wasd-controls="acceleration: 100" game-controls>
         <a-hand id='hand' position='0 -1.5 -2'>
@@ -23,8 +27,14 @@
     /></a-piece>
    
     <a-deck rotation='90 0 0' position='0.33 -2 -1.53'>
-    {% for card in deck %}
+    {% for card in playerdeck %}
         <a-piece front='#{{ card.name }}' back='#Player Card Back' /></a-piece>
+    {% endfor %}
+    </a-deck>
+
+    <a-deck rotation='90 0 0' position='0.3 -2 -4.60'>
+    {% for card in infectiondeck %}
+        <a-piece front='#{{ card.name }}' width=".8" height=".58" back='#Infection Card Back' /></a-piece>
     {% endfor %}
     </a-deck>
 
