@@ -27,7 +27,8 @@ AFRAME.registerComponent('deck', {
         cardHeight: {default: .85},
         cardDepth: {default: 0.035},
         cardDepthInDeck: {default: 0.01},
-        draw: {default: '#hand'},
+        draw: {type: 'selector', default: '#hand'},
+        shuffle: {default: true},
         tooltip: {type: 'string'}
     },    
     init: function () { // initialize components to default values
@@ -35,15 +36,17 @@ AFRAME.registerComponent('deck', {
         
         this.el.addEventListener('child-attached', function (ev) {
             self.setCardAttributes(ev.detail.el)
+            self.cards.push(ev.detail.el);
             self.recomputeSize();
         })
         this.el.addEventListener('child-detached', function (ev) {
+            self.cards.splice(self.cards.indexOf(ev.detail.el), 1);
             self.recomputeSize();
         })
         this.el.addEventListener('click', (evt) => {
             console.log("clicked on a deck!");
-            let draw = document.querySelector(this.data.draw);
-            let el = this.el.lastElementChild;
+            let draw = this.data.draw;
+            let el = this.cards[this.cards.length - 1];
             el.setAttribute("draggable", true); // for consistency sake since setting it doesn't do anything after initialization mapping
             el.setAttribute("piece", "draggable", true);
             el.setAttribute("depth", this.data.cardDepth);
@@ -52,6 +55,7 @@ AFRAME.registerComponent('deck', {
             let copy = el.cloneNode();            
             el.parentNode.removeChild(el);
             draw.appendChild(copy);
+            copy.setAttribute("exposed", true);
         });
         this.el.addEventListener('mouseenter', (ev) => {
             this.el.setAttribute('text', {value: this.data.tooltip});
@@ -61,8 +65,13 @@ AFRAME.registerComponent('deck', {
         })
         for (let i = 0; i < this.el.children.length; i++) {
             const el = this.el.children[i]
-            this.setCardAttributes(el)
+            this.setCardAttributes(el);
         }
+        this.cards = Array.from(this.el.children); // keep track of card order
+        if (this.data.shuffle) {
+            shuffle(this.cards);
+        }
+
         this.el.setAttribute('ammo-body', {type: 'dynamic'});
         this.el.setAttribute('geometry', {primitive: 'box'});
         this.el.setAttribute('material', {transparent: true, opacity: 0})
@@ -91,13 +100,13 @@ AFRAME.registerComponent('deck', {
         let x = 0;
         let y = 0;
         let z = 0;
-        for (let i = 0; i < this.el.children.length; i++) {
-            const el = this.el.children[i]
+        for (let i = 0; i < this.cards.length; i++) {
+            const el = this.cards[i]
             el.setAttribute("position", {x: 0, y: 0, z: i * this.data.cardDepthInDeck - this.el.children.length * this.data.cardDepthInDeck / 2});
             el.setAttribute("rotation", {x: 0, y: 0, z: 0});
         }
-        this.el.setAttribute('geometry', {width: this.data.cardWidth + 0.02, height: this.data.cardHeight + 0.02, depth: this.el.children.length * this.data.cardDepthInDeck + 0.02});
-        this.el.setAttribute('text', 'zOffset', this.el.children.length * this.data.cardDepthInDeck /2 + 0.02);
+        this.el.setAttribute('geometry', {width: this.data.cardWidth + 0.02, height: this.data.cardHeight + 0.02, depth: this.cards.length * this.data.cardDepthInDeck + 0.02});
+        this.el.setAttribute('text', 'zOffset', this.cards.length * this.data.cardDepthInDeck /2 + 0.02);
         this.el.removeAttribute('ammo-shape'); // physics driver doesn't handle shape updates
         this.el.setAttribute('ammo-shape', {type: 'box'});
     }
@@ -112,6 +121,7 @@ AFRAME.registerPrimitive('a-deck', {
         height: "deck.cardHeight",
         depth: "deck.cardDepth",
         tooltip: "deck.tooltip",
-        draw: "deck.draw" // FIXME: querySelector type doesnt' work with mapping
+        draw: "deck.draw",
+        shuffle: "deck.shuffle"
     }
 });
