@@ -100,7 +100,37 @@ AFRAME.registerComponent('piece', {
     mouseUpHandler: function(evt) {
         if (this.el.is('dragged')) {
             this.el.removeState('dragged');
-            this.el.setAttribute('piece', 'dynamic', 'true');    
+
+            let distance = 1000;
+            let closestEl = null;
+            let raycaster = this.el.sceneEl.components.raycaster;
+            for (const el of raycaster.intersectedEls) {
+                let intersection = raycaster.getIntersection(el);
+                if (intersection.distance < distance && el != this.el) {
+                    distance = intersection.distance;
+                    closestEl = el;
+                }
+            }
+
+            let copy = this.el.cloneNode();
+            if (closestEl && closestEl.components.deck) { // dropping a piece into a deck
+                let copy = this.el.cloneNode();            
+                closestEl.appendChild(copy);
+                this.el.parentNode.removeChild(this.el);
+            } else if (this.el.parentElement.components.hand) { // dropping a piece onto the scene from hand
+                // reflect certain components for performance, see https://aframe.io/docs/1.0.0/introduction/javascript-events-dom-apis.html#updating-position-rotation-scale-visible
+                this.el.object3D.updateMatrix();
+                this.el.object3D.updateMatrixWorld();
+                this.el.setAttribute('position', this.el.getAttribute('position'));
+                this.el.setAttribute('rotation', this.el.getAttribute('rotation'));
+                this.el.setAttribute('piece', 'dynamic', true);
+                this.el.flushToDOM(true);
+                let copy = this.el.cloneNode();            
+                this.el.sceneEl.appendChild(copy);
+                this.el.parentNode.removeChild(this.el);
+            } else { // just moving a piece within the scene, change back to dynamic
+                this.el.setAttribute('piece', 'dynamic', true);
+            }
         }
         (this.onmouseup || this.defaultMouseUp)(evt);
     }

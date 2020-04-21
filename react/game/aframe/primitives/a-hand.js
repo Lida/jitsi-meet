@@ -26,20 +26,7 @@ AFRAME.registerComponent('hand', {
         const childMouseUp =  (evt) => {
             console.log("released piece in hand!");
             console.log(evt);
-            if (self.draggingEl) {
-                // reflect certain components for performance, see https://aframe.io/docs/1.0.0/introduction/javascript-events-dom-apis.html#updating-position-rotation-scale-visible
-                self.draggingEl.object3D.updateMatrix();
-                self.draggingEl.object3D.updateMatrixWorld();
-                self.draggingEl.setAttribute('position', self.draggingEl.getAttribute('position'));
-                self.draggingEl.setAttribute('rotation', self.draggingEl.getAttribute('rotation'));
-                self.draggingEl.setAttribute('piece', 'dynamic', true);
-                self.draggingEl.flushToDOM(true);
-                let copy = self.draggingEl.cloneNode();            
-                self.el.sceneEl.appendChild(copy);
-                self.el.removeChild(self.draggingEl);
-                self.draggingEl = null;
-                this.recomputeHand();
-            }
+            this.draggingEl = null;
         }   
 
 
