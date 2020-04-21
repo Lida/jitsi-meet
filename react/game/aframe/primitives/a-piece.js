@@ -4,6 +4,7 @@ AFRAME.registerComponent('piece', {
     schema: {
         front: {type: 'string'},
         back: {type: 'string'}, // if null will use the same as the front but mirrored
+        exposed: {default: false},
         width: {default: 0.55},
         height: {default: .85},
         depth: {default: 0.035},
@@ -31,7 +32,11 @@ AFRAME.registerComponent('piece', {
             this.el.removeAttribute('ammo-shape');
             this.el.removeAttribute('ammo-body');
         }
-        this.el.setAttribute('multisrc', {src4: this.data.front, src5: this.data.back || this.data.front })
+        if (this.data.exposed) {
+            this.el.setAttribute('multisrc', {src4: this.data.front, src5: this.data.back || this.data.front })
+        } else {
+            this.el.setAttribute('multisrc', {src4: this.data.back || this.data.front, src5: this.data.front })
+        }
     },
     tock: function() {
         if (this.el.is('dragged')) { // find target location for dragged piece
@@ -150,6 +155,7 @@ AFRAME.registerPrimitive('a-piece', {
         color: 'piece.color',
         dynamic: 'piece.dynamic',
         draggable: 'piece.draggable',
+        exposed: 'piece.exposed',
         "hover-height": 'piece.hoverHeight'
     }
 });
