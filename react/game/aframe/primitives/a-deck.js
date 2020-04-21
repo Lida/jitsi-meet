@@ -27,13 +27,22 @@ AFRAME.registerComponent('deck', {
         cardHeight: {default: .85},
         cardDepth: {default: 0.035},
         cardDepthInDeck: {default: 0.01},
+        draw: {default: '#hand'},
         tooltip: {type: 'string'}
     },    
     init: function () { // initialize components to default values
-        let self = this
-        this.childMouseDown = (evt) => {
+        let self = this;
+        
+        this.el.addEventListener('child-attached', function (ev) {
+            self.setCardAttributes(ev.detail.el)
+            self.recomputeSize();
+        })
+        this.el.addEventListener('child-detached', function (ev) {
+            self.recomputeSize();
+        })
+        this.el.addEventListener('click', (evt) => {
             console.log("clicked on a deck!");
-            let hand = document.getElementById('hand');
+            let draw = document.querySelector(this.data.draw);
             let el = this.el.lastElementChild;
             el.setAttribute("draggable", true); // for consistency sake since setting it doesn't do anything after initialization mapping
             el.setAttribute("piece", "draggable", true);
@@ -42,17 +51,8 @@ AFRAME.registerComponent('deck', {
             el.flushToDOM(true);
             let copy = el.cloneNode();            
             el.parentNode.removeChild(el);
-            hand.appendChild(copy);
-        }
-
-        this.el.addEventListener('child-attached', function (ev) {
-            self.setCardAttributes(ev.detail.el)
-            self.recomputeSize();
-        })
-        this.el.addEventListener('child-detached', function (ev) {
-            self.recomputeSize();
-        })
-        this.el.addEventListener('mousedown', this.childMouseDown);
+            draw.appendChild(copy);
+        });
         this.el.addEventListener('mouseenter', (ev) => {
             this.el.setAttribute('text', {value: this.data.tooltip});
         })
@@ -111,6 +111,7 @@ AFRAME.registerPrimitive('a-deck', {
         width: "deck.cardWidth",
         height: "deck.cardHeight",
         depth: "deck.cardDepth",
-        tooltip: "deck.tooltip"
+        tooltip: "deck.tooltip",
+        draw: "deck.draw" // FIXME: querySelector type doesnt' work with mapping
     }
 });

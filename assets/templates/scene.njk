@@ -27,19 +27,21 @@
     depth='.1'
     /></a-piece>
    
-    <a-deck rotation='-90 0 0' position='0.33 -2 -1.53' tooltip='Player Deck'>
+    <a-deck rotation='-90 0 0' position='0.33 -2 -1.53' tooltip="Player\nDeck" text="color: #000">
     {% for card in playerdeck %}
         <a-piece front='#{{ card.name }}' back='#Player Card Back' /></a-piece>
     {% endfor %}
     </a-deck>
 
-    <a-deck width=".8" height=".58" rotation='-90 0 0' position='0.3 -2 -4.60' tooltip='Infection Deck' >
+    <a-deck width=".8" height=".58" rotation='-90 0 0' position='0.3 -2 -4.60' tooltip="Infection\nDeck" draw="#infectionDiscard" >
     {% for card in infectiondeck %}
         <a-piece front='#{{ card.name }}' back='#Infection Card Back' /></a-piece>
     {% endfor %}
     </a-deck>
 
-    <a-deck id='playerDiscard' rotation='-90 0 0' position='1.05 -2 -1.53' tooltip='Player Discard' ></a-deck>
+    <a-deck id='infectionDiscard' width=".8" height=".58" rotation='-90 0 0' position='1.2 -2 -4.60' tooltip="Infection\nDiscards" ></a-deck>
+
+    <a-deck id='playerDiscard' rotation='-90 0 0' position='1.05 -2 -1.53' tooltip="Player\nDiscards" ></a-deck>
 
     <a-piece position='0, -2, -3' width='.1' height='.1' depth='.1' color='#F22' /></a-piece>
     <a-piece position='0, -1.9, -3' width='.1' height='.1' depth='.1' color='#22F' /></a-piece>
