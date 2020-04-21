@@ -1,4 +1,5 @@
-<a-scene id="scene" cursor="rayOrigin: mouse" raycaster="far: 20; objects: a-piece" physics="driver: ammo; debug: true;" shadow="type: pcfsoft" embedded>
+{% set inspector = 'inspector="url: http://localhost:3333/dist/aframe-inspector.js"' if process.env.NODE_ENV != 'production' else '' %}
+<a-scene id="scene" cursor="rayOrigin: mouse" raycaster="far: 20; objects: a-piece, a-deck" physics="driver: ammo; debug: true;" shadow="type: pcfsoft" {{ inspector | safe }} embedded>
     <a-assets>
         <img id='board' src='/assets/{{game}}/images/{{boardImage}}' />
         {% for card in playerdeck %}
@@ -26,17 +27,19 @@
     depth='.1'
     /></a-piece>
    
-    <a-deck rotation='90 0 0' position='0.33 -2 -1.53'>
+    <a-deck rotation='-90 0 0' position='0.33 -2 -1.53' tooltip='Player Deck'>
     {% for card in playerdeck %}
         <a-piece front='#{{ card.name }}' back='#Player Card Back' /></a-piece>
     {% endfor %}
     </a-deck>
 
-    <a-deck rotation='90 0 0' position='0.3 -2 -4.60'>
+    <a-deck width=".8" height=".58" rotation='-90 0 0' position='0.3 -2 -4.60' tooltip='Infection Deck' >
     {% for card in infectiondeck %}
-        <a-piece front='#{{ card.name }}' width=".8" height=".58" back='#Infection Card Back' /></a-piece>
+        <a-piece front='#{{ card.name }}' back='#Infection Card Back' /></a-piece>
     {% endfor %}
     </a-deck>
+
+    <a-deck id='playerDiscard' rotation='-90 0 0' position='1.05 -2 -1.53' tooltip='Player Discard' ></a-deck>
 
     <a-piece position='0, -2, -3' width='.1' height='.1' depth='.1' color='#F22' /></a-piece>
     <a-piece position='0, -1.9, -3' width='.1' height='.1' depth='.1' color='#22F' /></a-piece>

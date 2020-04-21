@@ -1,46 +1,91 @@
 import 'aframe';
 
+var shuffle = function (array) {
+
+	var currentIndex = array.length;
+	var temporaryValue, randomIndex;
+
+	// While there remain elements to shuffle...
+	while (0 !== currentIndex) {
+		// Pick a remaining element...
+		randomIndex = Math.floor(Math.random() * currentIndex);
+		currentIndex -= 1;
+
+		// And swap it with the current element.
+		temporaryValue = array[currentIndex];
+		array[currentIndex] = array[randomIndex];
+		array[randomIndex] = temporaryValue;
+	}
+
+	return array;
+
+};
+
 AFRAME.registerComponent('deck', {
     schema: {
-    },
+        cardWidth: {default: 0.55},
+        cardHeight: {default: .85},
+        cardDepth: {default: 0.035},
+        cardDepthInDeck: {default: 0.01},
+        tooltip: {type: 'string'}
+    },    
     init: function () { // initialize components to default values
-        const childMouseDown =  (evt) => {
+        let self = this
+        this.childMouseDown = (evt) => {
             console.log("clicked on a deck!");
             let hand = document.getElementById('hand');
             let el = this.el.lastElementChild;
             el.setAttribute("draggable", true); // for consistency sake since setting it doesn't do anything after initialization mapping
             el.setAttribute("piece", "draggable", true);
-            el.setAttribute("depth", 0.035);
-            el.setAttribute("piece", "depth", 0.035);
+            el.setAttribute("depth", this.data.cardDepth);
+            el.setAttribute("piece", "depth", this.data.cardDepth);
             el.flushToDOM(true);
             let copy = el.cloneNode();            
             el.parentNode.removeChild(el);
             hand.appendChild(copy);
-        }    
-        let self = this
+        }
+
         this.el.addEventListener('child-attached', function (ev) {
-            ev.detail.el.addEventListener('mousedown', childMouseDown);
+            this.setCardAttributes(ev.detail.el)
             self.recomputeSize();
         })
         this.el.addEventListener('child-detached', function (ev) {
-            ev.detail.el.removeEventListener('mousedown', childMouseDown);
             self.recomputeSize();
+        })
+        this.el.addEventListener('mousedown', this.childMouseDown);
+        this.el.addEventListener('mouseenter', (ev) => {
+            this.el.setAttribute('text', {value: this.data.tooltip});
+        })
+        this.el.addEventListener('mouseleave', (ev) => {
+            this.el.setAttribute('text', {value: ''});
         })
         for (let i = 0; i < this.el.children.length; i++) {
             const el = this.el.children[i]
-            el.addEventListener('mousedown', childMouseDown);
-            el.setAttribute("dynamic", false);
-            el.setAttribute("piece", "dynamic", false);
-            el.setAttribute("draggable", false);
-            el.setAttribute("piece", "draggable", false);
-            el.setAttribute("depth", "0.01");
-            el.setAttribute("piece", "depth", "0.01");
-            el.setAttribute("position", {x: 0, y: 0, z: i * 0.01 - this.el.children.length * 0.005});
+            this.setCardAttributes(el)
         }
         this.el.setAttribute('ammo-body', {type: 'dynamic'});
+        this.el.setAttribute('geometry', {primitive: 'box'});
+        this.el.setAttribute('material', {transparent: true, opacity: 0})
+        this.el.setAttribute('text', {
+            transparent: false, 
+            width: 4,
+            align: 'center',
+        });
     },
     update: function(oldData) {
         this.recomputeSize();
+    },
+    setCardAttributes: function (el) {
+        el.setAttribute("dynamic", false);
+        el.setAttribute("piece", "dynamic", false);
+        el.setAttribute("draggable", false);
+        el.setAttribute("piece", "draggable", false);
+        el.setAttribute("depth", this.data.cardDepthInDeck);
+        el.setAttribute("piece", "depth", this.data.cardDepthInDeck);
+        el.setAttribute("width", this.data.cardWidth);
+        el.setAttribute("piece", "width", this.data.cardWidth);
+        el.setAttribute("height", this.data.cardHeight);
+        el.setAttribute("piece", "height", this.data.cardHeight);
     },
     recomputeSize: function() {
         let x = 0;
@@ -48,13 +93,12 @@ AFRAME.registerComponent('deck', {
         let z = 0;
         for (let i = 0; i < this.el.children.length; i++) {
             const el = this.el.children[i]
-            let piece = el.components.piece.data;
-            x = Math.max(x, piece.width / 2);
-            y = Math.max(y, piece.height / 2);
-            el.setAttribute("position", {x: 0, y: 0, z: i * 0.01 - this.el.children.length * 0.005});
+            el.setAttribute("position", {x: 0, y: 0, z: i * this.data.cardDepthInDeck - this.el.children.length * this.data.cardDepthInDeck / 2});
         }
+        this.el.setAttribute('geometry', {width: this.data.cardWidth + 0.02, height: this.data.cardHeight + 0.02, depth: this.el.children.length * this.data.cardDepthInDeck + 0.02});
+        this.el.setAttribute('text', 'zOffset', this.el.children.length * this.data.cardDepthInDeck /2 + 0.02);
         this.el.removeAttribute('ammo-shape'); // physics driver doesn't handle shape updates
-        this.el.setAttribute('ammo-shape', {type: 'box', fit: 'manual', halfExtents: {x, y, z: 0.01 * this.el.children.length / 2}});
+        this.el.setAttribute('ammo-shape', {type: 'box'});
     }
 })
 
@@ -62,5 +106,10 @@ AFRAME.registerPrimitive('a-deck', {
     defaultComponents: {
         deck: {},
     },
-    mappings: {}
+    mappings: {
+        width: "deck.cardWidth",
+        height: "deck.cardHeight",
+        depth: "deck.cardDepth",
+        tooltip: "deck.tooltip"
+    }
 });
