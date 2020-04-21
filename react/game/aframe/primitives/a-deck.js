@@ -46,7 +46,7 @@ AFRAME.registerComponent('deck', {
         }
 
         this.el.addEventListener('child-attached', function (ev) {
-            this.setCardAttributes(ev.detail.el)
+            self.setCardAttributes(ev.detail.el)
             self.recomputeSize();
         })
         this.el.addEventListener('child-detached', function (ev) {
@@ -94,6 +94,7 @@ AFRAME.registerComponent('deck', {
         for (let i = 0; i < this.el.children.length; i++) {
             const el = this.el.children[i]
             el.setAttribute("position", {x: 0, y: 0, z: i * this.data.cardDepthInDeck - this.el.children.length * this.data.cardDepthInDeck / 2});
+            el.setAttribute("rotation", {x: 0, y: 0, z: 0});
         }
         this.el.setAttribute('geometry', {width: this.data.cardWidth + 0.02, height: this.data.cardHeight + 0.02, depth: this.el.children.length * this.data.cardDepthInDeck + 0.02});
         this.el.setAttribute('text', 'zOffset', this.el.children.length * this.data.cardDepthInDeck /2 + 0.02);
