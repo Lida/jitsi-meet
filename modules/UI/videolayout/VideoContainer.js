@@ -489,7 +489,7 @@ export class VideoContainer extends LargeContainer {
             return;
         }
 
-        //stream.attach(this.$video[0]);
+        stream.attach(this.$video[0]);
 
         const flipX = stream.isLocal() && this.localFlipX;
 

@@ -473,9 +473,9 @@ export default class SmallVideo {
      */
     selectDisplayMode(input) {
         // Display name is always and only displayed when user is on the stage
-        if (input.isCurrentlyOnLargeVideo && !input.tileViewEnabled) {
-            return input.isVideoPlayable && !input.isAudioOnly ? DISPLAY_BLACKNESS_WITH_NAME : DISPLAY_AVATAR_WITH_NAME;
-        } else if (input.isVideoPlayable && input.hasVideo && !input.isAudioOnly) {
+        // if (input.isCurrentlyOnLargeVideo && !input.tileViewEnabled) {
+        //     return input.isVideoPlayable && !input.isAudioOnly ? DISPLAY_BLACKNESS_WITH_NAME : DISPLAY_AVATAR_WITH_NAME;
+        if (input.isVideoPlayable && input.hasVideo && !input.isAudioOnly) {
             // check hovering and change state to video with name
             return input.isHovered ? DISPLAY_VIDEO_WITH_NAME : DISPLAY_VIDEO;
         }

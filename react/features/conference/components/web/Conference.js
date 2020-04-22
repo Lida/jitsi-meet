@@ -189,7 +189,7 @@ class Conference extends AbstractConference<Props, *> {
                 >
                 <div id = 'videospace'>
                     <LargeVideo />
-                    <div id = 'filmstripLocalVideoThumbnail' />
+                    <Filmstrip filmstripOnly = { filmstripOnly } />
                 </div>
             </div>
         );

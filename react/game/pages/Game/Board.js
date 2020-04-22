@@ -50,7 +50,6 @@ export default function Board(props) {
     return (
         <Fragment>
             <div id="aframe" style={{zIndex: 1, pointerEvents: 'auto'}} />
-            <UI />
         </Fragment>
     );    
 }

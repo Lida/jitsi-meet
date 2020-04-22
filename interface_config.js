@@ -13,9 +13,9 @@ var interfaceConfig = {
 
     INITIAL_TOOLBAR_TIMEOUT: 20000,
     TOOLBAR_TIMEOUT: 4000,
-    TOOLBAR_ALWAYS_VISIBLE: false,
-    DEFAULT_REMOTE_DISPLAY_NAME: 'Fellow Jitster',
-    DEFAULT_LOCAL_DISPLAY_NAME: 'me',
+    TOOLBAR_ALWAYS_VISIBLE: true,
+    DEFAULT_REMOTE_DISPLAY_NAME: '',
+    DEFAULT_LOCAL_DISPLAY_NAME: '',
     SHOW_JITSI_WATERMARK: true,
     JITSI_WATERMARK_LINK: 'https://jitsi.org',
 
@@ -28,8 +28,8 @@ var interfaceConfig = {
     GENERATE_ROOMNAMES_ON_WELCOME_PAGE: true,
     DISPLAY_WELCOME_PAGE_CONTENT: true,
     DISPLAY_WELCOME_PAGE_TOOLBAR_ADDITIONAL_CONTENT: false,
-    APP_NAME: 'Jitsi Meet',
-    NATIVE_APP_NAME: 'Jitsi Meet',
+    APP_NAME: 'Game and Chat',
+    NATIVE_APP_NAME: 'Game and Chat',
     PROVIDER_NAME: 'Jitsi',
     LANG_DETECTION: true, // Allow i18n to detect the system language
     INVITATION_POWERED_BY: true,
@@ -77,7 +77,7 @@ var interfaceConfig = {
     SHOW_PROMOTIONAL_CLOSE_PAGE: false,
     RANDOM_AVATAR_URL_PREFIX: false,
     RANDOM_AVATAR_URL_SUFFIX: false,
-    FILM_STRIP_MAX_HEIGHT: 120,
+    FILM_STRIP_MAX_HEIGHT: 200,
 
     // Enables feedback star animation.
     ENABLE_FEEDBACK_ANIMATION: false,

@@ -512,7 +512,7 @@ export default class RemoteVideo extends SmallVideo {
         $(streamElement).hide();
 
         this.waitForPlayback(streamElement, stream);
-        //stream.attach(streamElement);
+        stream.attach(streamElement);
 
         if (!isVideo) {
             this._audioStreamElement = streamElement;
