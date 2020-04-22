@@ -1,5 +1,5 @@
 {% set inspector = 'inspector="url: http://localhost:3333/dist/aframe-inspector.js"' if process.env.NODE_ENV != 'production' else '' %}
-<a-scene id="scene" cursor="rayOrigin: mouse" raycaster="far: 20; objects: a-piece, a-deck" physics="driver: ammo; debug: true;" shadow="type: pcfsoft" {{ inspector | safe }} embedded>
+<a-scene id="scene" cursor="rayOrigin: mouse" raycaster="far: 20; objects: a-piece, a-deck" physics="driver: ammo; debug: false;" shadow="type: pcfsoft" {{ inspector | safe }} embedded>
     <a-assets>
         <img id='board' src='/assets/{{game}}/images/{{boardImage}}' />
         {% for card in playerdeck %}
