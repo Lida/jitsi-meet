@@ -51,7 +51,8 @@ AFRAME.registerComponent('hand', {
     recomputeHand() {
         for (let i = 0; i < this.el.children.length; i++) {
             const el = this.el.children[i]
-            el.setAttribute('position', {x: i * 0.4, y: 0, z: i * 0.001})
+            el.setAttribute('position', {x: i * 0.4 - this.el.children.length * 0.4 / 2, y: Math.abs(i - this.el.children.length / 2) * -.06+ 0.15, z: i * 0.005})
+            el.setAttribute('rotation', {x: 0, y: 0, z: (i - this.el.children.length / 2) * -4})
         }
     }
 })

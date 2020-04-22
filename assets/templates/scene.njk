@@ -11,7 +11,7 @@
         <img id='Player Card Back' src='/assets/{{game}}/images/{{ playerdeck[0].back }}' />
         <img id='Infection Card Back' src='/assets/{{game}}/images/{{ infectiondeck[0].back }}' />
     </a-assets>
-    <a-entity id='rig' position="0.5 2 -2.2" rotation="-80 0 0" camera="fov: 70" wasd-controls="acceleration: 100" game-controls>
+    <a-entity id='rig' position="0.5 1.7 -1.7" rotation="-80 0 0" camera="fov: 70" wasd-controls="acceleration: 100">
         <a-hand id='hand' position='0 -1.5 -2'>
         </a-hand>
     </a-entity>
@@ -33,15 +33,15 @@
     {% endfor %}
     </a-deck>
 
-    <a-deck width=".8" height=".58" rotation='-90 0 0' position='0.3 -2 -4.60' tooltip="Infection\nDeck" draw="#infectionDiscard" >
+    <a-deck width=".8" height=".58" rotation='-90 0 0' position='0.3 -2 -4.60' tooltip="Infection\nDeck" draw="#infectionDiscard" text="color: #000" >
     {% for card in infectiondeck %}
         <a-piece front='#{{ card.name }}' back='#Infection Card Back' /></a-piece>
     {% endfor %}
     </a-deck>
 
-    <a-deck id='infectionDiscard' width=".8" height=".58" rotation='-90 0 0' position='1.2 -2 -4.60' tooltip="Infection\nDiscards" ></a-deck>
+    <a-deck id='infectionDiscard' width=".8" height=".58" rotation='-90 0 0' position='1.2 -2 -4.60' tooltip="Infection\nDiscards" text="color: #000" ></a-deck>
 
-    <a-deck id='playerDiscard' rotation='-90 0 0' position='1.05 -2 -1.53' tooltip="Player\nDiscards" ></a-deck>
+    <a-deck id='playerDiscard' rotation='-90 0 0' position='1.05 -2 -1.53' tooltip="Player\nDiscards" text="color: #000" ></a-deck>
 
     <a-piece position='0, -2, -3' width='.1' height='.1' depth='.1' color='#F22' /></a-piece>
     <a-piece position='0, -1.9, -3' width='.1' height='.1' depth='.1' color='#22F' /></a-piece>
@@ -50,8 +50,8 @@
 
     <a-light type='ambient' color='#445451'></a-light>
     
-    <a-light type='spot' intensity='.4' position='2 4 2' rotation="-18 5 0"  light='castShadow: true; shadowCameraVisible: true; shadowBias: -0.00001; shadowMapWidth: 1024; shadowMapHeight: 1024' ></a-light>
-    <a-light type='spot' intensity='.4' position='2 4 2' rotation="-18 5 0" ></a-light>
+    <a-light type='spot' intensity='.4' position='1 3 -4' rotation="-80 5 0"  light='castShadow: true; shadowCameraVisible: true; shadowBias: -0.00001; shadowMapWidth: 1024; shadowMapHeight: 1024' ></a-light>
+    <a-light type='spot' intensity='.4' position='1 3 -4' rotation="-80 5 0" ></a-light>
 
     <a-sky color='#333333' />
 </a-scene>
