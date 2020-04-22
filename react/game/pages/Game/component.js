@@ -7,7 +7,6 @@ import 'aframe-template-component';
 import { Conference } from '../../../features/conference';
 import { useParams } from 'react-router-dom';
 import Board from './Board';
-import UI from './UI';
 import convert from 'xml-js';
 import { gameLoaded } from './actions';
 
@@ -44,7 +43,6 @@ export default function Game() {
     return (
         <div>
             <Board game={game} room={room} />
-            <UI />
             <Conference />
         </div>
       );    

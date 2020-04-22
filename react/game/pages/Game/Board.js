@@ -1,8 +1,9 @@
 // @flow
 
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { Fragment, useEffect, useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import '../../aframe';
+import UI from './UI';
 
 import nunjucks from 'nunjucks';
 
@@ -47,6 +48,9 @@ export default function Board(props) {
     }, [game, buildFile]);
 
     return (
-        <div id="aframe" style={{zIndex: 1}}/>
-      );    
+        <Fragment>
+            <div id="aframe" style={{zIndex: 1, pointerEvents: 'auto'}} />
+            <UI />
+        </Fragment>
+    );    
 }

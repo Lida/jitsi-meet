@@ -21,6 +21,7 @@ ReducerRegistry.register('game/videoTracks', (state = [], action) => {
     case PARTICIPANT_ID_CHANGED:
     case TRACK_NO_DATA_FROM_SOURCE:
     case TRACK_UPDATED:
+    case TRACK_WILL_CREATE:
         return state;
 
     case TRACK_ADDED: {
@@ -38,11 +39,33 @@ ReducerRegistry.register('game/videoTracks', (state = [], action) => {
     case TRACK_REMOVED:
         return state.filter(t => t.jitsiTrack !== action.track.jitsiTrack);
 
+    default:
+        return state;
+    }
+});
+
+ReducerRegistry.register('game/audioTracks', (state = [], action) => {
+    switch (action.type) {      
+    case PARTICIPANT_ID_CHANGED:
+    case TRACK_NO_DATA_FROM_SOURCE:
+    case TRACK_UPDATED:
     case TRACK_WILL_CREATE:
+        return state;
+
+    case TRACK_ADDED: {
         console.log(action)
-        if (action.track.mediaType == "video") {
+        if (action.track.mediaType == "audio") {
             return [ ...state, action.track ];
         }
+    }
+
+    case TRACK_CREATE_CANCELED:
+    case TRACK_CREATE_ERROR: {
+        return state.filter(t => !t.local || t.mediaType !== action.trackType);
+    }
+
+    case TRACK_REMOVED:
+        return state.filter(t => t.jitsiTrack !== action.track.jitsiTrack);
 
     default:
         return state;
