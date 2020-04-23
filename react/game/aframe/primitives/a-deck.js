@@ -1,4 +1,5 @@
 import 'aframe';
+import { movePiece } from '../networking';
 
 var shuffle = function (array) {
 
@@ -56,7 +57,7 @@ AFRAME.registerComponent('deck', {
             el.parentNode.removeChild(el);
             draw.appendChild(copy);
             copy.setAttribute("exposed", true);
-            this.el.sceneEl.systems.remote.dispatch({type: 'Drew', piece: 1, to: this.data.draw.id});
+            this.el.sceneEl.systems.networking.dispatch(movePiece(1, this.data.draw.id));
         });
         this.el.addEventListener('mouseenter', (ev) => {
             this.el.setAttribute('text', {value: this.data.tooltip});

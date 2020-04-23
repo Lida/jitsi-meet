@@ -1,10 +1,9 @@
 import 'aframe';
 
-export const REMOTE_EVENT_TYPE = 'RemoteEvent'
-
+import { REMOTE_EVENT_TYPE } from './actionTypes';
 declare var APP: Object;
 
-AFRAME.registerSystem('remote', {
+AFRAME.registerSystem('networking', {
     schema: {
 
     },

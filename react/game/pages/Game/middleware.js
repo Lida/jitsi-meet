@@ -13,7 +13,7 @@ import { MiddlewareRegistry } from '../../../features/base/redux';
 import { TRACK_ADDED, TRACK_REMOVED } from '../../../features/base/tracks';
 import { ENDPOINT_MESSAGE_RECEIVED } from '../../../features/subtitles/actionTypes';
 
-import { REMOTE_EVENT_TYPE } from '../../aframe/remote-system';
+import { REMOTE_EVENT_TYPE } from '../../aframe/networking';
 declare var APP: Object;
 
 /**
@@ -57,7 +57,7 @@ MiddlewareRegistry.register(store => next => action => {
     case ENDPOINT_MESSAGE_RECEIVED:
         let json = action.json;
         if (json.type && json.type == REMOTE_EVENT_TYPE) {
-            return dispatchRemoteEvent(state, next, action);
+            return dispatchRemoteEvent(store, next, action);
         }
         break;
     }
