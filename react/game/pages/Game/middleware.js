@@ -11,10 +11,6 @@ import {
 } from '../../../features/base/participants';
 import { MiddlewareRegistry } from '../../../features/base/redux';
 import { TRACK_ADDED, TRACK_REMOVED } from '../../../features/base/tracks';
-import { ENDPOINT_MESSAGE_RECEIVED } from '../../../features/subtitles/actionTypes';
-
-import { REMOTE_EVENT_TYPE } from '../../aframe/networking';
-declare var APP: Object;
 
 /**
  * Middleware which intercepts actions and updates the legacy component
@@ -53,32 +49,6 @@ MiddlewareRegistry.register(store => next => action => {
     
     case TRACK_REMOVED:
         break;
-    
-    case ENDPOINT_MESSAGE_RECEIVED:
-        let json = action.json;
-        if (json.type && json.type == REMOTE_EVENT_TYPE) {
-            return dispatchRemoteEvent(store, next, action);
-        }
-        break;
     }
-
     return next(action);
 });
-/**
- * Dispatch remote events locally
- * 
- * @param {Store} store - The redux store in which the specified {@code action}
- * is being dispatched.
- * @param {Dispatch} next - The redux {@code dispatch} function to dispatch the
- * specified {@code action} to the specified {@code store}.
- * @param {Action} action - The redux action {@code CONFERENCE_JOINED} which is
- * being dispatched in the specified {@code store}.
- * @private
- * @returns {Object} The value returned by {@code next(action)}.
- */
-function dispatchRemoteEvent({ dispatch, getState }, next, action) {
-    const result = next(action);
-    console.log("dispatching remote event", action);
-    dispatch(action.json.payload);
-    return result;
-}
