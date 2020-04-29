@@ -27,6 +27,7 @@ import '../features/video-layout';
 import { AbstractApp } from '../features/app/components/AbstractApp';
 import Home from './pages/Home';
 import { Game } from './pages/Game';
+import './undo-middleware';
 /**
  * Root app {@code Component} on Web/React.
  *
