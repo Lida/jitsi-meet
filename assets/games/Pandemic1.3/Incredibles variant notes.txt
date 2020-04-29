@@ -1,0 +1,57 @@
+THE INCREDIBLES VARIANT
+     To play Pandemic with the Incredibles variant, use 2-4 of the Incredibles roles in the Roles 
+window (recommended with 4 roles and 4 epidemics). Within the Setup window open, right-click on
+the Incredibles Special Event cards, choose "Draw multiple cards", type in "5", then drag them
+over to the Player Cards. Right-click on those cards to "Shuffle" them and then deal them out 
+and continue as usual from there.
+
+BACKGROUND
+     The Underminer has resurfaced again after his previous scheme to destroy the world with his army 
+of Gilgenbots was foiled by The Incredibles and Frozone. This time, he has created a new kind of robot 
+that self-replicates, called CloneBots. With his CloneBots spreading pollution around the world, the 
+Underminer’s evil plans may succeed after all. 
+     The Underminer has built CloneBot replicating machines in several of the major cities of the world.
+There is always the danger of CloneBots spawning more of their own kind, especially when several of 
+them are together in one city, which can cause a "CloneBot Spawn" to occur. With each CloneBot Spawn, 
+the world will grow more polluted and face the possible extinction of all living creatures.
+     The Underminer has developed four separate models of the CloneBots in different parts of the world, 
+each with its own unique programming code. He also has CloneBot Interface Stations located in each city 
+which allow for teleportation between each other and special connections to the CloneBots’ programming. 
+Only one CloneBot Interface Station has been discovered so far, in Atlanta, but the others can be 
+located with some effort. The Incredibles must work together to destroy the CloneBots before they 
+spread too widely and they must discover the programming codes for each robot model to shut them all 
+down at CloneBot interface stations.
+
+GAMEPLAY
+   Play exactly as per the normal rules of Pandemic. To win, discover the four programming codes 
+before running out of Player Cards or before 8 CloneBot Spawns occur or before one color of CloneBots 
+is entirely on the board.
+
+For purposes of the theme and with reference to some of the new cards:
+   Drive/Ferry actions are called Move actions. 
+   The Infection Phase is called the Replication Phase. 
+   An Epidemic is called a CloneBot Expansion.
+   An Outbreak is called a CloneBot Spawn. 
+   Cures are CloneBot Programming Codes. 
+   Eradication is CloneBot Deactivation.
+   A Treat Disease action is called a Destroy CloneBot action.
+   A Research Center is called a CloneBot Interface Station.
+
+
+NOTES ON THE ROLES:
+
+   Mr. Incredible: He is the same as The Medic in all senses.
+
+   Elastigirl: Her ability to destroy a CloneBot in an adjacant city is always limited to one per 
+action, once per turn (i.e. she still cannot remove more than one using that ability even when that 
+color’s deactivation code has been discovered). For her Mom Power ability, she can only move other 
+players to her location, not any other type of movement (a la The Dispatcher).
+   
+   Violet: Violet's Force Field ability is in effect no matter whose turn it is.
+
+   Dash: Dash is not required to move two spaces for each action, but when he does move two spaces 
+for one Move action, he must complete that movement before taking any other actions.
+
+
+For any questions about this variant, please contact Grudunza on Boardgamegeek, or e-mail
+grudunza@gmail.com

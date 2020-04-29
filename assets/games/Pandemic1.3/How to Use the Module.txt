@@ -1,0 +1,138 @@
+HOW TO USE THIS MODULE
+
+ROLES
+
+   Choose a random role by pressing the Random Roles button located in the Roles window.
+Drag the role card from the Roles window onto the board. Drag the pawn from the Roles
+window onto the map in Atlanta. Repeat for each player.
+
+-----------------------------------------------------------------------------------------
+
+SETTING UP THE INFECTION DECK
+
+   To set up the Infection Deck, right-click on the "Bottom of Infection Deck" cards, 
+to shuffle and then "Draw multiple cards". Enter 24 and drag the cards from there
+to the Infection Cards space.
+
+-----------------------------------------------------------------------------------------
+
+INITIAL INFECTION
+
+   Follow the rules in the rulebooks; links provided in Help Menu.
+
+-----------------------------------------------------------------------------------------
+
+MUTATION CHALLENGE?
+
+   The Mutation, Woldwide Panic, and Superbug Challenges have additional Infection
+cards; They are found in the Setup Window. After the Initial Infection step, Bring
+the appropriate cards from the Setup Window to the board as the rules instruct.
+
+-----------------------------------------------------------------------------------------
+
+SETTING UP THE PLAYER CARD DECK
+
+You can follow the numbered steps in the dropdown menu in the Setup Window. This will 
+    automatically shuffle all decks, deal player hands, setup the Epidemic decks, and
+    shuffle and send all the Player Cards to the board.
+
+If you want to handle that manually, or play the Incredibles Varient, use the steps here:
+
+1. Right-click on each deck to shuffle all decks above or use the Shuffle All Decks
+    button within the dropdown menu at the top of the Setup window.
+
+2. Right-click on Special Event cards to draw multiple cards and enter the number
+    of cards equal to 2 per player. Drag those to the Player Cards deck and shuffle
+    the player deck once again.
+
+3. Drag cards from this window to the Player's Hands.
+    (2 player = 4 cards, 3 player = 3 cards, 4 player = 2 cards, 5 player = 2 cards)
+
+4. If playing the Mutation Challenge from "On the Brink", drag the 3 Mutation Event
+    cards to the player deck and shuffle the player deck.
+
+5. Drag an Epidemic card (or Virulent Strain card) onto an empty, gray deck space.
+
+6. If playing the Superbug or Emergency Event Challenges or playing the Team
+    Game, drag 1 card onto each Epidemic card you laid out above from the
+    appropriate deck.
+
+7. Right-click on the Player Cards deck to select multiple cards and drag them onto
+    each Epidemic card you laid out above.
+    (* epidemics[e]: 4e = 11, 5e = 8, 6e = 7, 7e = 6
+    - then drag out the rest until the Player Cards deck has been emptied.)
+
+8. Right-click on each of the new decks you've created to shuffle them and send
+    them to the board or use the Send to Board button at the top of the Setup window
+    which shuffles all the stacks and sends them to the board.
+
+-----------------------------------------------------------------------------------------
+
+BIOTERRORIST CHALLENGE
+
+   If you are playing the Bioterrorist Challenge, the Bioterrorist player should sign in
+as Player 5 and use that hand window for their hand of cards.  The Bioterrorist will have
+to use one of the tracking sheets to keep track of their actions (there is no means
+provided in the module for doing that).  Bioterrorist tracking sheets can be found in the
+"On the Brink" file section on BoardGameGeek.
+
+-----------------------------------------------------------------------------------------
+
+DRAWING/DISCARDING CARDS
+
+   Draw a card by dragging it out from a deck. Discard by selecting the card and pressing
+"D", right-clicking and choosing "Discard", or just dragging the card to the discard pile. 
+
+-----------------------------------------------------------------------------------------
+
+EPIDEMICS
+
+   When an Epidemic occurs, draw a card from the "Bottom of Infection Deck" pile and
+place 3 Infection Cubes on the indicated city as per the rules.
+
+   For the Intensify step of an Epidemic, right-click on the Infection Discard pile,
+choose "Shuffle", and then right-click and choose "Put on top of Infection Deck".
+
+-----------------------------------------------------------------------------------------
+
+ADDING DISEASE CUBES
+
+   To add a disease cube, click on the colored cube and drag it out to a location. The
+number indicates how many of that color's cubes are remaining in the supply.
+
+-----------------------------------------------------------------------------------------
+
+TREATING DISEASE CUBES
+
+   To treat a disease cube, click on it and press "D" to discard it back to the supply,
+right-click on the cube and choose "[Return...]", or just drag it back to the supply.
+
+You can select more than one cube and discard using one of those options.
+
+-----------------------------------------------------------------------------------------
+
+CURES
+
+   Cure counters can be dragged from the Lab Window onto the board where there are cure
+vial outlines. When eradicating a disease, select the cure vial and press "E" or
+right-click and select "Eradicated".
+
+-----------------------------------------------------------------------------------------
+
+TROUBLESHOOTER/FORECAST
+
+   For the Troubleshooter's ability, and for the "Forecast" Special Event card, drag out
+the number of cards needed, then drag them back to the Infection Deck, first adding the
+cards you want lower on the deck. 
+
+-----------------------------------------------------------------------------------------
+
+ARCHIVIST/RESILIENT POPULATION/RE-EXAMINED RESEARCH
+
+   To select a particular card from the Player Discards or Infection Discards, right-click on
+the stack and select "Draw specific cards" to choose the card you want.
+
+-----------------------------------------------------------------------------------------
+
+Original Pandemic module created by Grudunza on Boardgamegeek (grudunza@gmail.com).
+-This instruction page was also written by Grudunza and modified for use in latest module.

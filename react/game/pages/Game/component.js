@@ -70,7 +70,7 @@ function parseText(text) {
 
 function loadGame(game: string) {
     return async (dispatch: Dispatch<any>, getState: Function) => {
-        let response = await fetch(`/assets/${game}/buildFile`);
+        let response = await fetch(`/assets/games/${game}/buildFile`);
         let text = await response.text()
         let buildFile = convert.xml2js(text, {
             compact: true,
