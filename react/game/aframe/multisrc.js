@@ -129,6 +129,7 @@ AFRAME.registerComponent('multisrc', {
             }
             //combine asset string with srcpath to make url
             url = data.srcspath+asset
+            url = url.toLowerCase();
   
             //check type, image or video
             //check if its an image or video
