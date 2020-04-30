@@ -76,7 +76,8 @@ function loadGame(game: string) {
             compact: true,
             elementNameFn: function(val) {
                 return val.split(".").pop();
-            }
+            },
+            alwaysArray: ["Map", "DrawPile", "CardSlot"]
         });
         window.Game = buildFile // make it available as a global for debugging purposes
         // extract the important parts of the buildFile.
