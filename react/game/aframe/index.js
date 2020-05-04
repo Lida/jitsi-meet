@@ -8,4 +8,4 @@ import 'aframe-state-component';
 import './multisrc';
 import './game-controls';
 import './primitives';
-import './networking';
+import './middleware';

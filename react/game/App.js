@@ -28,6 +28,7 @@ import { AbstractApp } from '../features/app/components/AbstractApp';
 import Home from './pages/Home';
 import { Game } from './pages/Game';
 import './undo-middleware';
+import './networking-middleware';
 /**
  * Root app {@code Component} on Web/React.
  *

@@ -1,0 +1,1 @@
+export const DRAW_PIECE = 'DRAW_PIECE';

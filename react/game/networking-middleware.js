@@ -1,27 +1,44 @@
 // @flow
 
-import { MiddlewareRegistry } from '../../../features/base/redux';
-import { ENDPOINT_MESSAGE_RECEIVED } from '../../../features/subtitles/actionTypes';
+import { MiddlewareRegistry } from '../features/base/redux';
+import { ENDPOINT_MESSAGE_RECEIVED } from '../features/subtitles/actionTypes';
 
-import { REMOTE_EVENT_TYPE, MOVE_PIECE } from './actionTypes';
-declare var APP: Object;
+const REMOTE_EVENT_TYPE = 'RemoteEvent';
 
 export const REPLICATE = Symbol();
+
+declare var APP: Object;
+
+
+function sendRemoteAction(action) {
+    try {
+        APP.conference.sendEndpointMessage('', {
+            type: REMOTE_EVENT_TYPE,
+            payload: action
+        });
+        console.log("sending remote event", action)
+    } catch (e) {
+        console.error(
+            'Failed to send EndpointMessage via the datachannels',
+            e);
+    }
+}
 
 /**
  * Middleware which intercepts actions and updates the legacy component
  */
 // eslint-disable-next-line no-unused-vars
 MiddlewareRegistry.register(store => next => action => {
+    // Forward any action that has replicate property set.
+    if (action[REPLICATE]) {
+        sendRemoteAction(action);
+    }
     switch (action.type) {    
     case ENDPOINT_MESSAGE_RECEIVED: // receive remote messages and dispatch locally
         let json = action.json;
         if (json.type && json.type == REMOTE_EVENT_TYPE) {
             return dispatchRemoteEvent(store, next, action);
         }
-        break;
-    case MOVE_PIECE:
-        console.log(`moving piece ${action.id} to ${action.to}`);
         break;
     }
 
