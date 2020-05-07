@@ -1,7 +1,7 @@
 import 'aframe';
-
+import ActionListenerRegistry from '../../action-listener-registry';
 import { drawPiece } from './actions';
-import { APP_LINK_SCHEME } from '../../../../features/base/util';
+import { DRAW_PIECE } from './actionTypes';
 
 var shuffle = function (array) {
 
@@ -50,18 +50,7 @@ AFRAME.registerComponent('deck', {
             console.log("clicked on a deck!");
             let draw = this.data.draw;
             let el = this.cards[this.cards.length - 1];
-            APP.store.dispatch(drawPiece(this.el, el, this.data.draw));
-            
-            el.setAttribute("draggable", true); // for consistency sake since setting it doesn't do anything after initialization mapping
-            el.setAttribute("piece", "draggable", true);
-            el.setAttribute("depth", this.data.cardDepth);
-            el.setAttribute("piece", "depth", this.data.cardDepth);
-            el.flushToDOM(true);
-            let copy = el.cloneNode();            
-            el.parentNode.removeChild(el);
-            draw.appendChild(copy);
-            copy.setAttribute("exposed", true);
-            //this.el.sceneEl.systems.networking.dispatch(movePiece(1, this.data.draw.id));
+            APP.store.dispatch(drawPiece(this.el, el, this.data.draw));            
         });
         this.el.addEventListener('mouseenter', (ev) => {
             this.el.setAttribute('text', {value: this.data.tooltip});
@@ -131,3 +120,17 @@ AFRAME.registerPrimitive('a-deck', {
         shuffle: "deck.shuffle"
     }
 });
+
+ActionListenerRegistry.register((store, action) => {
+    if (action.type == DRAW_PIECE) {
+        let el = document.getElementById(action.element);
+        el.setAttribute("draggable", true); // for consistency sake since setting it doesn't do anything after initialization mapping
+        el.setAttribute("piece", "draggable", true);
+        el.flushToDOM(true);
+        let copy = el.cloneNode();            
+        el.parentNode.removeChild(el);
+        let to = document.getElementById(action.to);
+        to.appendChild(copy);
+        copy.setAttribute("exposed", true);
+    }
+})

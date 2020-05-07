@@ -14,7 +14,7 @@ export function drawPiece(from, element, to) {
         type: DRAW_PIECE,
         from: from.id,
         element: element.id,
-        location: to.id,
+        to: to.id,
         [REPLICATE]: true
     };
 }
