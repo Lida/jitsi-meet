@@ -3,7 +3,7 @@
 import { MiddlewareRegistry } from '../features/base/redux';
 import { ENDPOINT_MESSAGE_RECEIVED } from '../features/subtitles/actionTypes';
 import { GAME_SCENE_LOADED } from './pages/Game/actionTypes';
-import { CONFERENCE_JOINED } from '../features/base/conference';
+import { DATA_CHANNEL_OPENED } from '../features/base/conference';
 
 const REMOTE_EVENT_TYPE = 'RemoteEvent';
 
@@ -52,7 +52,7 @@ MiddlewareRegistry.register(store => next => action => {
         case GAME_SCENE_LOADED:
             gameLoaded = true;
             break;
-        case CONFERENCE_JOINED:
+        case DATA_CHANNEL_OPENED:
             conferenceJoined = true;
             break;
         case SYNC_GAME_ACTIONS: // send all previous network messages so participant catches up, only if we are the first moderator
