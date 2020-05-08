@@ -3,7 +3,7 @@
 import { MiddlewareRegistry } from '../features/base/redux';
 import { ENDPOINT_MESSAGE_RECEIVED } from '../features/subtitles/actionTypes';
 import { GAME_SCENE_LOADED } from './pages/Game/actionTypes';
-import { PARTICIPANT_JOINED, PARTICIPANT_UPDATED } from '../features/base/participants';
+import { CONFERENCE_JOINED } from '../features/base/conference';
 
 const REMOTE_EVENT_TYPE = 'RemoteEvent';
 
@@ -31,6 +31,7 @@ function sendRemoteAction(action, to = '') {
 let ReplicatedActions = [];
 
 let gameLoaded = false;
+let conferenceJoined = false;
 let gameSynced = false;
 /**
  * Middleware which intercepts actions and updates the legacy component
@@ -49,21 +50,18 @@ MiddlewareRegistry.register(store => next => action => {
     }
     switch (action.type) {
         case GAME_SCENE_LOADED:
-            gameLoaded = true; // fall through, these event should trigger a sync
-        case PARTICIPANT_JOINED:
-        case PARTICIPANT_UPDATED:
-            if (gameLoaded && !gameSynced && me.role != 'moderator') { // If not the one to host the game, ask to sync the game from the moderator
-                let mod = participants.find(part => part.role == 'moderator');
-                if (mod) {
-                    sendRemoteAction({type: SYNC_GAME_ACTIONS}, mod.id);
-                    gameSynced = true;
-                }
-            }
+            gameLoaded = true;
+            break;
+        case CONFERENCE_JOINED:
+            conferenceJoined = true;
             break;
         case SYNC_GAME_ACTIONS: // send all previous network messages so participant catches up, only if we are the first moderator
-            if (me.role == 'moderator') { // I am the moderator, so I should send messages recently joined participant to catch up
-                for (const action of ReplicatedActions) {
-                    sendRemoteAction(action, action.participant.id);
+            {
+                let roomCreator = localStorage.getItem('createdRoom') == store.getState()['features/base/conference'].room;
+                if (roomCreator) { // I am the room host/creator, so I should reply to sync message
+                    for (const action of ReplicatedActions) {
+                        sendRemoteAction(action, action.participant._id);
+                    }
                 }
             }
             break;
@@ -79,6 +77,13 @@ MiddlewareRegistry.register(store => next => action => {
                 return store.dispatch(payload);
             }
             break;
+    }
+    if (gameLoaded && conferenceJoined && !gameSynced ) { // If not the one to host the game, ask to sync the game once joined the conference
+        let roomCreator = localStorage.getItem('createdRoom') == store.getState()['features/base/conference'].room;
+        if (!roomCreator) {
+            sendRemoteAction({type: SYNC_GAME_ACTIONS});
+        }
+        gameSynced = true;
     }
     return result;
 });
