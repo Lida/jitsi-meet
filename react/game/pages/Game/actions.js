@@ -1,4 +1,4 @@
-import { GAME_DEFINITION_LOADED } from './actionTypes';
+import { GAME_DEFINITION_LOADED, GAME_SCENE_LOADED } from './actionTypes';
 
 /**
  * Signals that game definition was loaded
@@ -15,3 +15,19 @@ export function gameLoaded(data: Object) {
         data
     };
 }
+
+/**
+ * Signals that game scene has finished initialization
+ *
+ * @param {data} data - The data for the game
+ * @returns {{
+    *     type: GAME_SCENE_LOADED,
+    * }}
+    */
+   export function gameSceneLoaded(data: Object) {
+       return {
+           type: GAME_SCENE_LOADED,
+       };
+   }
+   
+   

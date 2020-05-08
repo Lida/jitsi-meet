@@ -1,14 +1,16 @@
 // @flow
 
 import React, { Fragment, useEffect, useState, useCallback } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import '../../aframe';
+import { gameSceneLoaded } from './actions';
 import UI from './UI';
 
 import nunjucks from 'nunjucks';
 
 export default function Board(props) {
     let { game, room } = props;
+    const dispatch = useDispatch();
 
     let buildFile = useSelector(state => state['game/buildFile'])
     useEffect(() => {
@@ -35,15 +37,16 @@ export default function Board(props) {
 
             aframe.innerHTML = content;
             // use code to do dynamic setups
-            // let scene = document.getElementById('scene');
-            // scene.addEventListener('click', (evt) => {
-            //     console.log("clicked!");
-            //     console.log(evt)
-            // })
-            // scene.addEventListener('mouseenter', (evt) => {
-            //     console.log("hover");
-            //     console.log(evt)
-            // })
+            let run = () => {
+                dispatch(gameSceneLoaded());
+            }
+
+            let scene = document.querySelector('a-scene');
+            if (scene.hasLoaded) {
+                run();
+            } else {
+                scene.addEventListener('loaded', run);
+            }
         }
     }, [game, buildFile]);
 

@@ -7,3 +7,5 @@
  * }
  */
 export const GAME_DEFINITION_LOADED = 'GAME_DEFINITION_LOADED';
+
+export const GAME_SCENE_LOADED = 'GAME_SCENE_LOADED';
