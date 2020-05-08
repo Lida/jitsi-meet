@@ -3,6 +3,7 @@
 import { MiddlewareRegistry } from '../features/base/redux';
 import { ENDPOINT_MESSAGE_RECEIVED } from '../features/subtitles/actionTypes';
 import { GAME_SCENE_LOADED } from './pages/Game/actionTypes';
+import { PARTICIPANT_JOINED, PARTICIPANT_UPDATED } from '../features/base/participants';
 
 const REMOTE_EVENT_TYPE = 'RemoteEvent';
 
@@ -29,6 +30,8 @@ function sendRemoteAction(action, to = '') {
 
 let ReplicatedActions = [];
 
+let gameLoaded = false;
+let gameSynced = false;
 /**
  * Middleware which intercepts actions and updates the legacy component
  */
@@ -46,10 +49,14 @@ MiddlewareRegistry.register(store => next => action => {
     }
     switch (action.type) {
         case GAME_SCENE_LOADED:
-            if (me.role != 'moderator') { // If not the one to host the game, ask to sync the game from the moderator
+            gameLoaded = true; // fall through, these event should trigger a sync
+        case PARTICIPANT_JOINED:
+        case PARTICIPANT_UPDATED:
+            if (gameLoaded && !gameSynced && me.role != 'moderator') { // If not the one to host the game, ask to sync the game from the moderator
                 let mod = participants.find(part => part.role == 'moderator');
                 if (mod) {
                     sendRemoteAction({type: SYNC_GAME_ACTIONS}, mod.id);
+                    gameSynced = true;
                 }
             }
             break;
