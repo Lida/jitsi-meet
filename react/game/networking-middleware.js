@@ -60,7 +60,10 @@ MiddlewareRegistry.register(store => next => action => {
                 let roomCreator = localStorage.getItem('createdRoom') == store.getState()['features/base/conference'].room;
                 if (roomCreator) { // I am the room host/creator, so I should reply to sync message
                     let id = action.participant._id;
+                    int i = 0;
                     for (const replicated of ReplicatedActions) {
+                        replicated.index = i;
+                        i++;
                         sendRemoteAction(replicated, id);
                     }
                 }
@@ -71,6 +74,7 @@ MiddlewareRegistry.register(store => next => action => {
             if (json.type && json.type == REMOTE_EVENT_TYPE) {
                 let payload = action.json.payload;
                 if (payload.type != SYNC_GAME_ACTIONS) { // ignore sync actions
+                    console.log(payload);
                     ReplicatedActions.push(Object.assign({}, payload));
                 } else {
                     payload.participant = action.participant; // append participant to sync messages
